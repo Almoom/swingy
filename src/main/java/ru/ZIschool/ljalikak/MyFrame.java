@@ -2,7 +2,6 @@ package ru.ZIschool.ljalikak;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ class MyFrame extends JFrame {
     private ButtonGroup racep;
     private JButton create;
     private JButton cont;
-    private ArrayList<Person> persons;
 
     public MyFrame() {
 
@@ -121,14 +119,14 @@ class MyFrame extends JFrame {
         create.setFont(h3f);
         create.setSize(150, 30);
         create.setLocation(90, 250);
-        create.addActionListener(new ContinieActionListener());
+        create.addActionListener(new ButtonsActionListener());
         c.add(create);
 
         cont = new JButton("continue");
         cont.setFont(h3f);
         cont.setSize(150, 30);
         cont.setLocation(250, 250);
-        cont.addActionListener(new ContinieActionListener());
+        cont.addActionListener(new ButtonsActionListener());
         c.add(cont);
 
         repaint();
