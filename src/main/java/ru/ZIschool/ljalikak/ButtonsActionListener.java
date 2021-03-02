@@ -11,7 +11,7 @@ public class ButtonsActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         persons = new ArrayList<>();
-        persons.add(new Person("test", "test", "human"));
+        persons.add(new Person("test", "test", Types.HUMAN));
         if (e.getActionCommand().equals("new")) {
 //            persons.add(new Person(e.getSource("login"), ))
         }
