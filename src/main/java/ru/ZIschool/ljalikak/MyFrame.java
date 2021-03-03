@@ -2,9 +2,13 @@ package ru.ZIschool.ljalikak;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Locale;
 
 class MyFrame extends JFrame {
     private Container c;
@@ -20,6 +24,18 @@ class MyFrame extends JFrame {
     private ButtonGroup racep;
     private JButton create;
     private JButton cont;
+    private Types type;
+    public static ServiceH2Db serviceH2Db;
+
+    static {
+        try {
+            serviceH2Db = new ServiceH2Db();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public MyFrame() {
 
@@ -92,6 +108,7 @@ class MyFrame extends JFrame {
         human.setSelected(true);
         human.setSize(80, 20);
         human.setLocation(190, 200);
+        human.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         c.add(human);
 
         mutant = new JRadioButton("mutant");
@@ -100,6 +117,7 @@ class MyFrame extends JFrame {
         mutant.setSelected(false);
         mutant.setSize(80, 20);
         mutant.setLocation(260, 200);
+        mutant.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         c.add(mutant);
 
         ghoul = new JRadioButton("ghoul");
@@ -108,6 +126,7 @@ class MyFrame extends JFrame {
         ghoul.setSelected(false);
         ghoul.setSize(80, 20);
         ghoul.setLocation(330, 200);
+        ghoul.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         c.add(ghoul);
 
         racep = new ButtonGroup();
@@ -119,14 +138,26 @@ class MyFrame extends JFrame {
         create.setFont(h3f);
         create.setSize(150, 30);
         create.setLocation(90, 250);
-        create.addActionListener(new ButtonsActionListener());
+        create.addActionListener(e -> {
+            try {
+                serviceH2Db.create(new Person(tlogin.getText(), tpassword.getText(), type));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
         c.add(create);
 
         cont = new JButton("continue");
         cont.setFont(h3f);
         cont.setSize(150, 30);
         cont.setLocation(250, 250);
-        cont.addActionListener(new ButtonsActionListener());
+        cont.addActionListener(e -> {
+            try {
+                System.out.println(serviceH2Db.check(tlogin.getText()));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
         c.add(cont);
 
         repaint();
