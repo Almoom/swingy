@@ -141,8 +141,11 @@ class MyFrame extends JFrame {
         create.addActionListener(e -> {
             try {
                 serviceH2Db.create(new Person(tlogin.getText(), tpassword.getText(), type));
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (RuntimeException ex) {
+                JOptionPane.showMessageDialog(null,
+                        ex.getMessage(),
+                        "Message",
+                        JOptionPane.PLAIN_MESSAGE);
             }
         });
         c.add(create);
@@ -153,9 +156,12 @@ class MyFrame extends JFrame {
         cont.setLocation(250, 250);
         cont.addActionListener(e -> {
             try {
-                System.out.println(serviceH2Db.check(tlogin.getText()));
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                serviceH2Db.read(new Person(tlogin.getText(), tpassword.getText(), type));
+            } catch (RuntimeException ex) {
+                JOptionPane.showMessageDialog(null,
+                        ex.getMessage(),
+                        "Message",
+                        JOptionPane.PLAIN_MESSAGE);
             }
         });
         c.add(cont);

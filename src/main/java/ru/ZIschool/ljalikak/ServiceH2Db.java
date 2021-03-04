@@ -97,22 +97,33 @@ public class ServiceH2Db implements CommonDAO {
     }
 
     @Override
-    public void create(Person person) throws SQLException {
-        statement.execute("INSERT INTO PERSONS (LOGIN, PASSWORD, RACE, LEVEL, EXP, ATTACK, DEFENSE, HP) VALUES ("
-                + "'" + person.getLogin() + "'"
-                + ",'" + person.getPassword() + "'"
-                + ",'" + person.getRace() + "'"
-                + "," + person.getLevel()
-                + "," + person.getExperience()
-                + "," + person.getAttack()
-                + "," + person.getDefense()
-                + "," + person.getHitPoints()
-                + ");");
-        readAll();
+    public void create(Person person) {
+        try {
+            if (check(person.getLogin())) {
+                throw new RuntimeException("Login is exist!");
+            }
+            statement.execute("INSERT INTO PERSONS (LOGIN, PASSWORD, RACE, LEVEL, EXP, ATTACK, DEFENSE, HP) VALUES ("
+                    + "'" + person.getLogin() + "'"
+                    + ",'" + person.getPassword() + "'"
+                    + ",'" + person.getRace() + "'"
+                    + "," + person.getLevel()
+                    + "," + person.getExperience()
+                    + "," + person.getAttack()
+                    + "," + person.getDefense()
+                    + "," + person.getHitPoints()
+                    + ");");
+            readAll();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
-    public boolean check(String login) throws SQLException {
+    public void read(Person person) {
+
+    }
+
+    private boolean check(String login) throws SQLException {
         return statement.executeQuery("SELECT * FROM PERSONS WHERE LOGIN = '" + login + "';").first();
     }
 

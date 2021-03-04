@@ -7,7 +7,7 @@ public interface CommonDAO {
     void closeConnection() throws SQLException;
 
     void create(Person person) throws SQLException;
-    boolean check(String login) throws SQLException;
+    void read(Person person) throws SQLException;
     void update(Person person);
 
 }
