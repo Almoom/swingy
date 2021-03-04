@@ -24,7 +24,6 @@ public class MyRadioButton extends JRadioButton {
         setForeground(color);
         setSize(80, 20);
         setSelected(type.equals(Types.HUMAN.toString().toLowerCase()));
-        setLocation(190 + count * 70, 200);
-        count++;
+        setLocation(190 + count++ * 70, 200);
     }
 }
