@@ -3,7 +3,7 @@ package ru.ZIschool.ljalikak;
 import java.sql.*;
 
 public class ServiceH2Db implements CommonDAO {
-    private static final String url = "jdbc:h2:/Users/ljalikak/IdeaProjects/swingy/db/Preservations;MV_STORE=false";
+    private static final String url = "jdbc:h2:" + System.getenv("PWD") + "/db/Preservations;MV_STORE=false";
     private static final String user = "LJ";
     private static final String password = "123456";
     private static Connection connection;
@@ -120,7 +120,14 @@ public class ServiceH2Db implements CommonDAO {
 
     @Override
     public void read(Person person) {
-
+        try {
+            if (!check(person.getLogin())) {
+                throw new RuntimeException("Person is not exist!");
+            }
+            //todo read 1 рожу
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     private boolean check(String login) throws SQLException {

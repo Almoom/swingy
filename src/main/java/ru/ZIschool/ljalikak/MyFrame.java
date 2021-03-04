@@ -102,30 +102,15 @@ class MyFrame extends JFrame {
         race.setLocation(100, 200);
         c.add(race);
 
-        human = new JRadioButton("human");
-        human.setFont(h3f);
-        human.setForeground(new Color(20, 240, 116));
-        human.setSelected(true);
-        human.setSize(80, 20);
-        human.setLocation(190, 200);
+        human = new MyRadioButton(Types.HUMAN.toString().toLowerCase());
         human.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         c.add(human);
 
-        mutant = new JRadioButton("mutant");
-        mutant.setFont(h3f);
-        mutant.setForeground(new Color(20, 240, 116));
-        mutant.setSelected(false);
-        mutant.setSize(80, 20);
-        mutant.setLocation(260, 200);
+        mutant = new MyRadioButton(Types.MUTANT.toString().toLowerCase());
         mutant.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         c.add(mutant);
 
-        ghoul = new JRadioButton("ghoul");
-        ghoul.setFont(h3f);
-        ghoul.setForeground(new Color(20, 240, 116));
-        ghoul.setSelected(false);
-        ghoul.setSize(80, 20);
-        ghoul.setLocation(330, 200);
+        ghoul = new MyRadioButton(Types.GHOUL.toString().toLowerCase());
         ghoul.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         c.add(ghoul);
 
