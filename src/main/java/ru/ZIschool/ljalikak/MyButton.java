@@ -5,8 +5,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class MyRadioButton extends JRadioButton {
-    private static final Color color = new Color(20, 240, 116);
+public class MyButton extends JButton {
     private static int count = 0;
     private static Font font;
     static {
@@ -18,12 +17,12 @@ public class MyRadioButton extends JRadioButton {
         }
     }
 
-    public MyRadioButton(String text) {
+    public MyButton(String text) {
         super(text);
+        setSize(150, 30);
+        setLocation(90 + 160 * count++, 250);
         setFont(font);
-        setForeground(color);
-        setSize(80, 20);
-        setSelected(text.equals(Types.HUMAN.toString().toLowerCase()));
-        setLocation(190 + count++ * 70, 200);
+
     }
+
 }

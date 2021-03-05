@@ -2,22 +2,18 @@ package ru.ZIschool.ljalikak;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Locale;
 
 class MyFrame extends JFrame {
     private Container c;
     private JLabel title;
-    private JLabel login;
-    private JTextField tlogin;
-    private JLabel password;
-    private JTextField tpassword;
-    private JLabel race;
+    private JLabel login = new MyLabel("Login");
+    private JTextField tlogin = new MyTextField();
+    private JLabel password = new MyLabel("Password");
+    private JTextField tpassword = new MyTextField();
+    private JLabel race = new MyLabel("Race");
     private JRadioButton human;
     private JRadioButton mutant;
     private JRadioButton ghoul;
@@ -40,15 +36,9 @@ class MyFrame extends JFrame {
     public MyFrame() {
 
         Font h1f = null;
-        Font h2f = null;
-        Font h3f = null;
         try {
             h1f = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/Overseer Italic.otf"))
                     .deriveFont(50f);
-            h2f = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/14262.ttf"))
-                    .deriveFont(20f);
-            h3f = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/14262.ttf"))
-                    .deriveFont(15f);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
@@ -59,7 +49,7 @@ class MyFrame extends JFrame {
 
         c = getContentPane();
         c.setLayout(null);
-        c.setBackground(Color.decode("#212121"));
+        c.setBackground(new Color(33, 33, 33));
         //#d9af2f - yellow
 
         title = new JLabel("Pip-boy game");
@@ -69,37 +59,10 @@ class MyFrame extends JFrame {
         title.setLocation(130, 20);
         c.add(title);
 
-        login = new JLabel("Login");
-        login.setFont(h2f);
-        login.setForeground(new Color(20, 240, 116));
-        login.setSize(100, 30);
-        login.setLocation(100, 100);
         c.add(login);
-
-        tlogin = new JTextField();
-        tlogin.setFont(new Font("Helvetica", Font.PLAIN, 15));
-        tlogin.setSize(190, 20);
-        tlogin.setLocation(200, 100);
         c.add(tlogin);
-
-        password = new JLabel("Password");
-        password.setFont(h2f);
-        password.setForeground(new Color(20, 240, 116));
-        password.setSize(100, 30);
-        password.setLocation(100, 150);
         c.add(password);
-
-        tpassword = new JTextField();
-        tpassword.setFont(new Font("Helvetica", Font.PLAIN, 15));
-        tpassword.setSize(190, 20);
-        tpassword.setLocation(200, 150);
         c.add(tpassword);
-
-        race = new JLabel("Race");
-        race.setFont(h2f);
-        race.setForeground(new Color(20, 240, 116));
-        race.setSize(100, 30);
-        race.setLocation(100, 200);
         c.add(race);
 
         human = new MyRadioButton(Types.HUMAN.toString().toLowerCase());
@@ -119,10 +82,7 @@ class MyFrame extends JFrame {
         racep.add(ghoul);
         racep.add(mutant);
 
-        create = new JButton("new");
-        create.setFont(h3f);
-        create.setSize(150, 30);
-        create.setLocation(90, 250);
+        create = new MyButton("new");
         create.addActionListener(e -> {
             try {
                 serviceH2Db.create(new Person(tlogin.getText(), tpassword.getText(), type));
@@ -135,10 +95,7 @@ class MyFrame extends JFrame {
         });
         c.add(create);
 
-        cont = new JButton("continue");
-        cont.setFont(h3f);
-        cont.setSize(150, 30);
-        cont.setLocation(250, 250);
+        cont = new MyButton("continue");
         cont.addActionListener(e -> {
             try {
                 serviceH2Db.read(new Person(tlogin.getText(), tpassword.getText(), type));
