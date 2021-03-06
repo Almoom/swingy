@@ -9,11 +9,11 @@ import java.sql.SQLException;
 class MyFrame extends JFrame {
     private Container c;
     private JLabel title;
-    private JLabel login = new MyLabel("Login");
-    private JTextField tlogin = new MyTextField();
-    private JLabel password = new MyLabel("Password");
-    private JTextField tpassword = new MyTextField();
-    private JLabel race = new MyLabel("Race");
+    private JLabel login;
+    private JTextField tlogin;
+    private JLabel password;
+    private JTextField tpassword;
+    private JLabel race;
     private JRadioButton human;
     private JRadioButton mutant;
     private JRadioButton ghoul;
@@ -59,10 +59,15 @@ class MyFrame extends JFrame {
         title.setLocation(130, 20);
         c.add(title);
 
+        login = new MyLabel("Login");
         c.add(login);
+        tlogin = new MyTextField();
         c.add(tlogin);
+        password = new MyLabel("Password");
         c.add(password);
+        tpassword = new MyTextField();
         c.add(tpassword);
+        race = new MyLabel("Race");
         c.add(race);
 
         human = new MyRadioButton(Types.HUMAN.toString().toLowerCase());
