@@ -90,7 +90,7 @@ class MyFrame extends JFrame {
         create = new MyButton("new");
         create.addActionListener(e -> {
             try {
-                serviceH2Db.create(new Person(tlogin.getText(), tpassword.getText(), type));
+                serviceH2Db.write(new Person(tlogin.getText(), tpassword.getText(), type));
             } catch (RuntimeException ex) {
                 JOptionPane.showMessageDialog(null,
                         ex.getMessage(),
@@ -103,7 +103,7 @@ class MyFrame extends JFrame {
         cont = new MyButton("continue");
         cont.addActionListener(e -> {
             try {
-                serviceH2Db.read(new Person(tlogin.getText(), tpassword.getText(), type));
+                System.out.println(serviceH2Db.read(tlogin.getText(), tpassword.getText()).toString());
             } catch (RuntimeException ex) {
                 JOptionPane.showMessageDialog(null,
                         ex.getMessage(),
