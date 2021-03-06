@@ -12,8 +12,9 @@ public class ServiceH2Db implements CommonDAO {
     private static final String password = "123456";
     private Connection connection;
 
-    static final String READ_PERSON_SQL = "SELECT PERSON FROM PERSONS WHERE LOGIN = ? AND PASSWORD = ?";
-    static final String WRITE_PERSON_SQL = "INSERT INTO PERSONS(LOGIN, PASSWORD, PERSON) VALUES (?, ?, ?)";
+    static final String READ_PERSON = "SELECT PERSON FROM PERSONS WHERE LOGIN = ? AND PASSWORD = ?";
+    static final String WRITE_PERSON = "INSERT INTO PERSONS(LOGIN, PASSWORD, PERSON) VALUES (?, ?, ?)";
+    static final String UPDATE_PERSON = "UPDATE PERSONS SET PERSON = ? WHERE LOGIN = ?";
     static final String CHECK_LOGIN_USES = "SELECT * FROM PERSONS WHERE LOGIN = ?";
     static final String CHECK_EXIST_PERSON = "SELECT * FROM PERSONS WHERE LOGIN = ? AND PASSWORD = ?";
 
@@ -25,6 +26,8 @@ public class ServiceH2Db implements CommonDAO {
         write(new Person("name1", "1111", Types.HUMAN));
         write(new Person("name2", "1111", Types.MUTANT));
         write(new Person("name3", "1111", Types.GHOUL));
+
+        update(new Person("name3", "1111", Types.GHOUL, 100, 100, 100, 100, 100));
     }
 
     public synchronized void createConnection() {
@@ -61,7 +64,7 @@ public class ServiceH2Db implements CommonDAO {
 
     @Override
     public void write(Person person) {
-        try (PreparedStatement pstmt = connection.prepareStatement(WRITE_PERSON_SQL)) {
+        try (PreparedStatement pstmt = connection.prepareStatement(WRITE_PERSON)) {
             checkLogin(person.getLogin());
             pstmt.setString(1, person.getLogin());
             pstmt.setString(2, person.getPassword());
@@ -86,7 +89,7 @@ public class ServiceH2Db implements CommonDAO {
     @Override
     public Person read(String login, String password) {
         Object object = null;
-        try (PreparedStatement pstmt = connection.prepareStatement(READ_PERSON_SQL)) {
+        try (PreparedStatement pstmt = connection.prepareStatement(READ_PERSON)) {
             checkExist(login, password);
 
             pstmt.setString(1, login);
@@ -119,7 +122,13 @@ public class ServiceH2Db implements CommonDAO {
 
     @Override
     public void update(Person person) {
-
+        try (PreparedStatement pstmt = connection.prepareStatement(UPDATE_PERSON)) {
+            pstmt.setObject(1, person);
+            pstmt.setString(2, person.getLogin());
+            pstmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 }
