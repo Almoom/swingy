@@ -1,8 +1,10 @@
-package ru.ZIschool.ljalikak;
+package ru.ZIschool.ljalikak.services;
+
+import ru.ZIschool.ljalikak.Person;
 
 import java.sql.SQLException;
 
-public interface CommonDAO {
+public interface IDAO {
     void createConnection();
     void write(Person person) throws SQLException;
     Person read(String login, String password) throws SQLException;

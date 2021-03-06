@@ -1,11 +1,14 @@
-package ru.ZIschool.ljalikak;
+package ru.ZIschool.ljalikak.services;
+
+import ru.ZIschool.ljalikak.Person;
+import ru.ZIschool.ljalikak.Types;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.sql.*;
 
-public class ServiceH2Db implements CommonDAO {
+public class DAOh2 implements IDAO {
     private static final String driver = "org.h2.Driver";
     private static final String url = "jdbc:h2:" + System.getenv("PWD") + "/db/Preservations;MV_STORE=false";
     private static final String username = "LJ";
@@ -18,14 +21,14 @@ public class ServiceH2Db implements CommonDAO {
     static final String CHECK_LOGIN_USES = "SELECT * FROM PERSONS WHERE LOGIN = ?";
     static final String CHECK_EXIST_PERSON = "SELECT * FROM PERSONS WHERE LOGIN = ? AND PASSWORD = ?";
 
-    public ServiceH2Db() throws SQLException, ClassNotFoundException {
+    public DAOh2() throws SQLException, ClassNotFoundException {
         createConnection();
         dropTable();
         createTable();
 
-        write(new Person("name1", "1111", Types.HUMAN));
-        write(new Person("name2", "1111", Types.MUTANT));
-        write(new Person("name3", "1111", Types.GHOUL));
+        write(new Person("name1", "1111", ru.ZIschool.ljalikak.Types.HUMAN));
+        write(new Person("name2", "1111", ru.ZIschool.ljalikak.Types.MUTANT));
+        write(new Person("name3", "1111", ru.ZIschool.ljalikak.Types.GHOUL));
 
         update(new Person("name3", "1111", Types.GHOUL, 100, 100, 100, 100, 100));
     }

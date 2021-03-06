@@ -1,10 +1,11 @@
 package ru.ZIschool.ljalikak;
 
+import ru.ZIschool.ljalikak.controller.ControllerFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 
 class MyFrame extends JFrame {
     private Container c;
@@ -21,17 +22,7 @@ class MyFrame extends JFrame {
     private JButton create;
     private JButton cont;
     private Types type;
-    public static ServiceH2Db serviceH2Db;
-
-    static {
-        try {
-            serviceH2Db = new ServiceH2Db();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+    private ControllerFrame controllerFrame = new ControllerFrame();
 
     public MyFrame() {
 
@@ -90,7 +81,7 @@ class MyFrame extends JFrame {
         create = new MyButton("new");
         create.addActionListener(e -> {
             try {
-                serviceH2Db.write(new Person(tlogin.getText(), tpassword.getText(), type));
+                controllerFrame.createNewPersonAndStartGame(new Person(tlogin.getText(), tpassword.getText(), type));
             } catch (RuntimeException ex) {
                 JOptionPane.showMessageDialog(null,
                         ex.getMessage(),
@@ -103,7 +94,7 @@ class MyFrame extends JFrame {
         cont = new MyButton("continue");
         cont.addActionListener(e -> {
             try {
-                System.out.println(serviceH2Db.read(tlogin.getText(), tpassword.getText()).toString());
+                controllerFrame.findPersonAndStartGame(tlogin.getText(), tpassword.getText());
             } catch (RuntimeException ex) {
                 JOptionPane.showMessageDialog(null,
                         ex.getMessage(),
