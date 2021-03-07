@@ -1,4 +1,6 @@
-package ru.ZIschool.ljalikak;
+package ru.ZIschool.ljalikak.view;
+
+import ru.ZIschool.ljalikak.Race;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +25,7 @@ public class MyRadioButton extends JRadioButton {
         setFont(font);
         setForeground(color);
         setSize(80, 20);
-        setSelected(text.equals(Types.HUMAN.toString().toLowerCase()));
+        setSelected(text.equals(Race.HUMAN.toString().toLowerCase()));
         setLocation(190 + count++ * 70, 200);
     }
 }

@@ -5,17 +5,17 @@ import java.io.Serializable;
 public class Person implements Serializable {
     private String login;
     private String password;
-    private Types race;
+    private Race race;
     private int level;
     private int experience;
     private int attack;
     private int defense;
     private int hitPoints;
 
-    public Person(String login, String password, Types race) {
+    public Person(String login, String password, Race Race) {
         this.login = login;
         this.password = password;
-        this.race = race;
+        this.race = Race;
         this.level = 1;
         this.experience = 0;
         this.attack = 1;
@@ -23,10 +23,10 @@ public class Person implements Serializable {
         this.hitPoints = 100;
     }
 
-    public Person(String login, String password, Types race, int level, int experience, int attack, int defense, int hitPoints) {
+    public Person(String login, String password, Race Race, int level, int experience, int attack, int defense, int hitPoints) {
         this.login = login;
         this.password = password;
-        this.race = race;
+        this.race = Race;
         this.level = level;
         this.experience = experience;
         this.attack = attack;
@@ -42,7 +42,7 @@ public class Person implements Serializable {
         return password;
     }
 
-    public Types getRace() {
+    public Race getRace() {
         return race;
     }
 

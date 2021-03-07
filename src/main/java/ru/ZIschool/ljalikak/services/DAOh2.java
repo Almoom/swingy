@@ -1,7 +1,7 @@
 package ru.ZIschool.ljalikak.services;
 
 import ru.ZIschool.ljalikak.Person;
-import ru.ZIschool.ljalikak.Types;
+import ru.ZIschool.ljalikak.Race;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,11 +26,11 @@ public class DAOh2 implements IDAO {
         dropTable();
         createTable();
 
-        write(new Person("name1", "1111", ru.ZIschool.ljalikak.Types.HUMAN));
-        write(new Person("name2", "1111", ru.ZIschool.ljalikak.Types.MUTANT));
-        write(new Person("name3", "1111", ru.ZIschool.ljalikak.Types.GHOUL));
+        write(new Person("name1", "1111", Race.HUMAN));
+        write(new Person("name2", "1111", Race.MUTANT));
+        write(new Person("name3", "1111", Race.GHOUL));
 
-        update(new Person("name3", "1111", Types.GHOUL, 100, 100, 100, 100, 100));
+        update(new Person("name3", "1111", Race.GHOUL, 100, 100, 100, 100, 100));
     }
 
     public synchronized void createConnection() {

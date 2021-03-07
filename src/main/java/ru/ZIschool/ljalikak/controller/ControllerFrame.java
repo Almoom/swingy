@@ -2,8 +2,10 @@ package ru.ZIschool.ljalikak.controller;
 
 import ru.ZIschool.ljalikak.Person;
 import ru.ZIschool.ljalikak.services.DAOh2;
+import ru.ZIschool.ljalikak.view.MyGameFrame;
 
 import java.awt.*;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class ControllerFrame implements IController {
@@ -30,6 +32,11 @@ public class ControllerFrame implements IController {
     @Override
     public void createNewPersonAndStartGame(Person person) {
         daoH2.write(person);
+        try {
+            MyGameFrame f = new MyGameFrame("test", 100, 100);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -1,7 +1,18 @@
 package ru.ZIschool.ljalikak;
 
 public enum Types {
-    HUMAN,
-    MUTANT,
-    GHOUL
+    EMPTY,
+    BOUNDARY,
+
+    STONE,
+    TREE,
+
+    PlAYER,
+    ANIMAL,
+
+    BLOOD,
+    WATER,
+    GREEN,
+    EARTH,
+    BLACK
 }

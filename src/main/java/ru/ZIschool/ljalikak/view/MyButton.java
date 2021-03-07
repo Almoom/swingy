@@ -1,4 +1,4 @@
-package ru.ZIschool.ljalikak;
+package ru.ZIschool.ljalikak.view;
 
 import javax.swing.*;
 import java.awt.*;
