@@ -6,13 +6,15 @@ import ru.ZIschool.ljalikak.view.MyGameFrame;
 import ru.ZIschool.ljalikak.view.MyRegistrationFrame;
 
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 public class ControllerGUI implements IController {
     private static DAOh2 daoH2 = DAOh2.getProvider();
+    MyRegistrationFrame f;
 
     public ControllerGUI() {
-        MyRegistrationFrame f = new MyRegistrationFrame(this);
+        f = new MyRegistrationFrame(this);
     }
 
     @Override
@@ -29,10 +31,11 @@ public class ControllerGUI implements IController {
     public void createNewPersonAndStartGame(Person person) {
         daoH2.write(person);
         try {
-            MyGameFrame f = new MyGameFrame("test", 100, 100);
+            MyGameFrame ff = new MyGameFrame("test", 100, 100);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
     }
 
     @Override
