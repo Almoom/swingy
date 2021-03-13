@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.sql.*;
 
 public class DAOh2 implements IDAO {
+    private static DAOh2 daOh2;
     private static final String driver = "org.h2.Driver";
     private static final String url = "jdbc:h2:" + System.getenv("PWD") + "/db/Preservations;MV_STORE=false";
     private static final String username = "LJ";
@@ -20,8 +21,19 @@ public class DAOh2 implements IDAO {
     static final String UPDATE_PERSON = "UPDATE PERSONS SET PERSON = ? WHERE LOGIN = ?";
     static final String CHECK_LOGIN_USES = "SELECT * FROM PERSONS WHERE LOGIN = ?";
     static final String CHECK_EXIST_PERSON = "SELECT * FROM PERSONS WHERE LOGIN = ? AND PASSWORD = ?";
-
-    public DAOh2() throws SQLException, ClassNotFoundException {
+    
+    public static DAOh2 getProvider() {
+        try {
+            if (daOh2 == null) {
+                daOh2 = new DAOh2();
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return daOh2;
+    }
+    
+    private DAOh2() throws SQLException, ClassNotFoundException {
         createConnection();
         dropTable();
         createTable();

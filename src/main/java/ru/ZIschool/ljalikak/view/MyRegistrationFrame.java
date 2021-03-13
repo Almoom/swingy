@@ -2,7 +2,7 @@ package ru.ZIschool.ljalikak.view;
 
 import ru.ZIschool.ljalikak.Person;
 import ru.ZIschool.ljalikak.Race;
-import ru.ZIschool.ljalikak.controller.ControllerFrame;
+import ru.ZIschool.ljalikak.controller.ControllerGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +23,7 @@ public class MyRegistrationFrame extends JFrame {
     private JButton cont;
     private Race type;
 
-    public MyRegistrationFrame(ControllerFrame controllerFrame) {
+    public MyRegistrationFrame(ControllerGUI controllerFrame) {
 
         setTitle("Registration Form");
         setBounds(300, 90, 490, 350);

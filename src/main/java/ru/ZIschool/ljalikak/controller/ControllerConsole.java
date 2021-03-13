@@ -3,20 +3,17 @@ package ru.ZIschool.ljalikak.controller;
 import ru.ZIschool.ljalikak.Person;
 import ru.ZIschool.ljalikak.services.DAOh2;
 import ru.ZIschool.ljalikak.view.MyGameFrame;
+import ru.ZIschool.ljalikak.view.MyRegistrationConsole;
+import ru.ZIschool.ljalikak.view.MyRegistrationFrame;
 
 import java.awt.*;
 import java.io.IOException;
-import java.sql.SQLException;
 
-public class ControllerFrame implements IController {
-    private static DAOh2 daoH2;
+public class ControllerConsole implements IController {
+    private static DAOh2 daoH2 = DAOh2.getProvider();
 
-    static {
-        try {
-            daoH2 = new DAOh2();
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
-        }
+    public ControllerConsole() {
+        MyRegistrationConsole f = new MyRegistrationConsole(this);
     }
 
     @Override

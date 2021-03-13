@@ -12,7 +12,7 @@
     <description>Java Swing GUI.</description>
 
     <properties>
-        <main.class>ru.ZIschool.ljalikak.Gui</main.class>
+        <main.class>ru.ZIschool.ljalikak.Main</main.class>
         <source.version>1.8</source.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
