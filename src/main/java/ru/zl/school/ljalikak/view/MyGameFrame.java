@@ -1,9 +1,8 @@
-package ru.ZIschool.ljalikak.view;
+package ru.zl.school.ljalikak.view;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class MyGameFrame extends JFrame {
     private MyPanel panel;

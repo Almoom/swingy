@@ -1,4 +1,4 @@
-package ru.ZIschool.ljalikak.controller;
+package ru.zl.school.ljalikak.controller;
 
 public abstract class ControllerFactory {
 

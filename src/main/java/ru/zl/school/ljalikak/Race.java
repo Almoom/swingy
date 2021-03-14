@@ -1,4 +1,4 @@
-package ru.ZIschool.ljalikak;
+package ru.zl.school.ljalikak;
 
 public enum Race {
     HUMAN,

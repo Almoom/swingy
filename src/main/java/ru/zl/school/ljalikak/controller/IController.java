@@ -1,6 +1,6 @@
-package ru.ZIschool.ljalikak.controller;
+package ru.zl.school.ljalikak.controller;
 
-import ru.ZIschool.ljalikak.Person;
+import ru.zl.school.ljalikak.Person;
 
 import java.awt.*;
 

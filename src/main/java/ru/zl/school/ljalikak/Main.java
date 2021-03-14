@@ -1,6 +1,6 @@
-package ru.ZIschool.ljalikak;
+package ru.zl.school.ljalikak;
 
-import ru.ZIschool.ljalikak.controller.ControllerFactory;
+import ru.zl.school.ljalikak.controller.ControllerFactory;
 
 import java.util.Scanner;
 
@@ -10,7 +10,8 @@ public class Main {
     private static final String GUI_MODE = "gui";
 
     public static void main(String[] args) {
-        ControllerFactory.newController(getMode());
+//        ControllerFactory.newController(getMode());
+        ControllerFactory.newController(GUI_MODE);
     }
 
     private static String getMode() {

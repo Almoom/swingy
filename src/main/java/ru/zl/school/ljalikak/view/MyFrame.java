@@ -1,13 +1,13 @@
-package ru.ZIschool.ljalikak.view;
+package ru.zl.school.ljalikak.view;
 
-import ru.ZIschool.ljalikak.Person;
-import ru.ZIschool.ljalikak.Race;
-import ru.ZIschool.ljalikak.controller.ControllerGUI;
+import ru.zl.school.ljalikak.Person;
+import ru.zl.school.ljalikak.Race;
+import ru.zl.school.ljalikak.controller.ControllerGUI;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class MyRegistrationFrame extends JFrame {
+public class MyFrame extends JFrame {
     private Container c;
     private JLabel title;
     private JLabel login;
@@ -23,10 +23,10 @@ public class MyRegistrationFrame extends JFrame {
     private JButton cont;
     private Race type;
 
-    public MyRegistrationFrame(ControllerGUI controllerFrame) {
+    public MyFrame(ControllerGUI controllerFrame) {
 
-        setTitle("Registration Form");
-        setBounds(300, 90, 490, 350);
+        setTitle("Swingy by Ljalikak");
+        setBounds(500, 200, 490, 350);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -93,5 +93,12 @@ public class MyRegistrationFrame extends JFrame {
 
         repaint();
         setVisible(true);
+    }
+
+    public void repainForGame() {
+        c.removeAll();
+        setBounds(getX(), getY(), 1000, 500);
+
+        repaint();
     }
 }

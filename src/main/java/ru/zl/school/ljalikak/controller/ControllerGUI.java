@@ -1,20 +1,19 @@
-package ru.ZIschool.ljalikak.controller;
+package ru.zl.school.ljalikak.controller;
 
-import ru.ZIschool.ljalikak.Person;
-import ru.ZIschool.ljalikak.services.DAOh2;
-import ru.ZIschool.ljalikak.view.MyGameFrame;
-import ru.ZIschool.ljalikak.view.MyRegistrationFrame;
+import ru.zl.school.ljalikak.Person;
+import ru.zl.school.ljalikak.model.DAOh2;
+import ru.zl.school.ljalikak.view.MyGameFrame;
+import ru.zl.school.ljalikak.view.MyFrame;
 
 import java.awt.*;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 public class ControllerGUI implements IController {
     private static DAOh2 daoH2 = DAOh2.getProvider();
-    MyRegistrationFrame f;
+    MyFrame f;
 
     public ControllerGUI() {
-        f = new MyRegistrationFrame(this);
+        f = new MyFrame(this);
     }
 
     @Override
@@ -30,17 +29,23 @@ public class ControllerGUI implements IController {
     @Override
     public void createNewPersonAndStartGame(Person person) {
         daoH2.write(person);
-        try {
-            MyGameFrame ff = new MyGameFrame("test", 100, 100);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
+        startGame(person);
     }
 
     @Override
     public void findPersonAndStartGame(String login, String password) {
-        daoH2.read(login, password);
+        Person person = daoH2.read(login, password);
+        startGame(person);
+    }
+
+    private void startGame(Person person) {
+        try {
+            f.repainForGame();
+
+            MyGameFrame ff = new MyGameFrame("test", 100, 100);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

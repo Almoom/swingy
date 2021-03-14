@@ -1,6 +1,6 @@
-package ru.ZIschool.ljalikak.view;
+package ru.zl.school.ljalikak.view;
 
-import ru.ZIschool.ljalikak.Race;
+import ru.zl.school.ljalikak.Race;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,10 +1,9 @@
-package ru.ZIschool.ljalikak.controller;
+package ru.zl.school.ljalikak.controller;
 
-import ru.ZIschool.ljalikak.Person;
-import ru.ZIschool.ljalikak.services.DAOh2;
-import ru.ZIschool.ljalikak.view.MyGameFrame;
-import ru.ZIschool.ljalikak.view.MyRegistrationConsole;
-import ru.ZIschool.ljalikak.view.MyRegistrationFrame;
+import ru.zl.school.ljalikak.Person;
+import ru.zl.school.ljalikak.model.DAOh2;
+import ru.zl.school.ljalikak.view.MyGameFrame;
+import ru.zl.school.ljalikak.view.MyRegistrationConsole;
 
 import java.awt.*;
 import java.io.IOException;

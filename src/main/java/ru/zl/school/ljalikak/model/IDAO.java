@@ -1,6 +1,6 @@
-package ru.ZIschool.ljalikak.services;
+package ru.zl.school.ljalikak.model;
 
-import ru.ZIschool.ljalikak.Person;
+import ru.zl.school.ljalikak.Person;
 
 import java.sql.SQLException;
 

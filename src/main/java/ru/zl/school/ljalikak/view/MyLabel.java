@@ -1,27 +1,28 @@
-package ru.ZIschool.ljalikak.view;
+package ru.zl.school.ljalikak.view;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class MyMainLabel extends JLabel {
+public class MyLabel extends JLabel {
     private static final Color color = new Color(20, 240, 116);
+    private static int count = 0;
     private static Font font;
     static {
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/Overseer Italic.otf"))
-                    .deriveFont(50f);
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/14262.ttf"))
+                    .deriveFont(20f);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
     }
 
-    public MyMainLabel(String text) {
+    public MyLabel(String text) {
         super(text);
-        setFont(font);
+        setSize(100, 30);
         setForeground(color);
-        setSize(500, 60);
-        setLocation(130, 20);
+        setLocation(100, 100 + 50 * count++);
+        setFont(font);
     }
 }

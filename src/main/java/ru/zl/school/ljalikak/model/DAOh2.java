@@ -1,7 +1,7 @@
-package ru.ZIschool.ljalikak.services;
+package ru.zl.school.ljalikak.model;
 
-import ru.ZIschool.ljalikak.Person;
-import ru.ZIschool.ljalikak.Race;
+import ru.zl.school.ljalikak.Person;
+import ru.zl.school.ljalikak.Race;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +42,7 @@ public class DAOh2 implements IDAO {
         write(new Person("name2", "1111", Race.MUTANT));
         write(new Person("name3", "1111", Race.GHOUL));
 
-        update(new Person("name3", "1111", Race.GHOUL, 100, 100, 100, 100, 100));
+//        update(new Person("name3", "1111", Race.GHOUL, 100, 100, 100, 100, 100));
     }
 
     public synchronized void createConnection() {

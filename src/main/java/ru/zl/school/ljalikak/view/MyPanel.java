@@ -1,10 +1,10 @@
-package ru.ZIschool.ljalikak.view;
+package ru.zl.school.ljalikak.view;
 
 
 
-import ru.ZIschool.ljalikak.Place;
-import ru.ZIschool.ljalikak.PlaceHolder;
-import ru.ZIschool.ljalikak.Types;
+import ru.zl.school.ljalikak.Place;
+import ru.zl.school.ljalikak.PlaceHolder;
+import ru.zl.school.ljalikak.Types;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
