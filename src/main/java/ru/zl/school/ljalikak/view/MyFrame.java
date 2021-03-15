@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MyFrame extends JFrame {
+    ControllerGUI controllerFrame;
     private Container c;
     private JLabel title;
     private JLabel login;
@@ -25,6 +26,7 @@ public class MyFrame extends JFrame {
 
     public MyFrame(ControllerGUI controllerFrame) {
 
+        this.controllerFrame = controllerFrame;
         setTitle("Swingy by Ljalikak");
         setBounds(500, 200, 490, 350);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -95,9 +97,14 @@ public class MyFrame extends JFrame {
         setVisible(true);
     }
 
-    public void repainForGame() {
-        c.removeAll();
+    public void repainForGame(Person person) {
+        getContentPane().removeAll();
+
+//        c.removeAll();
         setBounds(getX(), getY(), 1000, 500);
+//        add(gamePanel);
+//        add(textPanel);
+//        addKeyListener(listener);
 
         repaint();
     }
