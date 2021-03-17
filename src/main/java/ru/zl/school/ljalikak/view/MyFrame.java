@@ -18,8 +18,8 @@ public class MyFrame extends JFrame {
     private KeyListener listener;
     private Map<String, JLabel> labels;
     private static final String[] LABELS = {"NAME", "HP", "LEVEL", "EXP", "next exp", "ATTACK", "DEFENSE", "HELMET"};
-    private static final int GAME_PANEL_HEIGHT = 600;
-    private static final int GAME_PANEL_WIDTH = 800;
+    private static final int GAME_PANEL_HEIGHT = 350;
+    private static final int GAME_PANEL_WIDTH = 490;
     private static final int TEXT_PANEL_WIDTH = 300;
 
     private static int TEXT_WIDTH = 300;
@@ -126,9 +126,10 @@ public class MyFrame extends JFrame {
         getContentPane().removeAll();
 
 //        c.removeAll();
-        setBounds(getX(), getY(), 1000, 500);
+//        setBounds(0,0,GAME_PANEL_WIDTH + TEXT_PANEL_WIDTH, GAME_PANEL_HEIGHT);
+        setBounds(getX(), getY(), GAME_PANEL_WIDTH + TEXT_PANEL_WIDTH, GAME_PANEL_HEIGHT);
         add(gamePanel);
-//        add(textPanel);
+        add(textPanel);
 //        addKeyListener(listener);
 
         repaint();
@@ -155,7 +156,7 @@ public class MyFrame extends JFrame {
             y += TEXT_STEP_Y;
         }
 
-        JLabel label = new JLabel("logger");
+//        JLabel label = new JLabel("logger");
 //        label.setPreferredSize(new Dimension( TEXT_PANEL_WIDTH - 40,2000));
 //
 //        JScrollPane scrollFrame = new JScrollPane();
@@ -165,10 +166,10 @@ public class MyFrame extends JFrame {
 //        scrollFrame.setBounds(10, y, TEXT_PANEL_WIDTH - 50, 300);
 //        panel.add(scrollFrame);
 
-        label.setBounds(20, y, TEXT_PANEL_WIDTH - 40, 300);
-        label.setVerticalAlignment(SwingConstants.TOP);
-        panel.add(label);
-        labels.put("logger", label);
+//        label.setBounds(20, y, TEXT_PANEL_WIDTH - 40, 300);
+//        label.setVerticalAlignment(SwingConstants.TOP);
+//        panel.add(label);
+//        labels.put("logger", label);
 
         return  panel;
     }

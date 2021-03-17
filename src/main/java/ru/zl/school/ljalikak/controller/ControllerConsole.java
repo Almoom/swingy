@@ -28,11 +28,6 @@ public class ControllerConsole implements IController {
     @Override
     public void createNewPersonAndStartGame(Person person) {
         daoH2.write(person);
-        try {
-            MyGameFrame f = new MyGameFrame("test", 100, 100);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

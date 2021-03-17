@@ -39,13 +39,7 @@ public class ControllerGUI implements IController {
     }
 
     private void startGame(Person person) {
-        try {
-            f.repainForGame(person);
-
-            MyGameFrame ff = new MyGameFrame("test", 100, 100);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        f.repainForGame(person);
     }
 
     @Override
