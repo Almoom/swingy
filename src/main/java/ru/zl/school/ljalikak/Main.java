@@ -2,6 +2,7 @@ package ru.zl.school.ljalikak;
 
 import ru.zl.school.ljalikak.controller.ControllerFactory;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -9,7 +10,7 @@ public class Main {
     private static final String CONSOLE_MODE = "console";
     private static final String GUI_MODE = "gui";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        ControllerFactory.newController(getMode());
         ControllerFactory.newController(GUI_MODE);
     }

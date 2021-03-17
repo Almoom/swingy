@@ -12,7 +12,7 @@ public class ControllerGUI implements IController {
     private static DAOh2 daoH2 = DAOh2.getProvider();
     MyFrame f;
 
-    public ControllerGUI() {
+    public ControllerGUI() throws IOException {
         f = new MyFrame(this);
     }
 

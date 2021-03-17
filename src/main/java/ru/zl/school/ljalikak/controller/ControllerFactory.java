@@ -1,8 +1,10 @@
 package ru.zl.school.ljalikak.controller;
 
+import java.io.IOException;
+
 public abstract class ControllerFactory {
 
-    public static IController newController(String type) {
+    public static IController newController(String type) throws IOException {
         IController controller;
 
         switch (type) {

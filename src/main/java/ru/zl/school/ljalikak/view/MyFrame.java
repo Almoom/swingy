@@ -6,9 +6,28 @@ import ru.zl.school.ljalikak.controller.ControllerGUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyFrame extends JFrame {
     ControllerGUI controllerFrame;
+    private MyPanel gamePanel;
+    private JPanel textPanel;
+    private KeyListener listener;
+    private Map<String, JLabel> labels;
+    private static final String[] LABELS = {"NAME", "HP", "LEVEL", "EXP", "next exp", "ATTACK", "DEFENSE", "HELMET"};
+    private static final int GAME_PANEL_HEIGHT = 600;
+    private static final int GAME_PANEL_WIDTH = 800;
+    private static final int TEXT_PANEL_WIDTH = 300;
+
+    private static int TEXT_WIDTH = 300;
+    private static int TEXT_START_X = 20;
+    private static int TEXT_START_Y = 20;
+    private static int TEXT_STEP_X = 100;
+    private static int TEXT_STEP_Y = 30;
+
     private Container c;
     private JLabel title;
     private JLabel login;
@@ -24,9 +43,15 @@ public class MyFrame extends JFrame {
     private JButton cont;
     private Race type;
 
-    public MyFrame(ControllerGUI controllerFrame) {
+    public MyFrame(ControllerGUI controllerFrame) throws IOException {
 
         this.controllerFrame = controllerFrame;
+        gamePanel = new MyPanel(GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
+        gamePanel.setBounds(0, 0, GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
+
+        textPanel = createTextPane();
+        textPanel.setBounds(GAME_PANEL_WIDTH + 10, 10, TEXT_WIDTH - 20, GAME_PANEL_HEIGHT - 40);
+
         setTitle("Swingy by Ljalikak");
         setBounds(500, 200, 490, 350);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -102,10 +127,49 @@ public class MyFrame extends JFrame {
 
 //        c.removeAll();
         setBounds(getX(), getY(), 1000, 500);
-//        add(gamePanel);
+        add(gamePanel);
 //        add(textPanel);
 //        addKeyListener(listener);
 
         repaint();
+    }
+
+    private JPanel createTextPane() {
+        JPanel panel = new JPanel(null);
+        panel.setSize(TEXT_PANEL_WIDTH - 20, GAME_PANEL_HEIGHT);
+        panel.setBackground(Color.GRAY);
+
+        labels = new HashMap<>();
+
+        int y = TEXT_START_Y;
+        for (String s : LABELS) {
+            JLabel label = new JLabel(s);
+            label.setBounds(TEXT_START_X, y, TEXT_STEP_X, TEXT_START_Y);
+            panel.add(label);
+
+            label = new JLabel(s);
+            label.setBounds(TEXT_START_X + TEXT_STEP_X, y, TEXT_STEP_X, TEXT_START_Y);
+            panel.add(label);
+            labels.put(s, label);
+
+            y += TEXT_STEP_Y;
+        }
+
+        JLabel label = new JLabel("logger");
+//        label.setPreferredSize(new Dimension( TEXT_PANEL_WIDTH - 40,2000));
+//
+//        JScrollPane scrollFrame = new JScrollPane();
+//        label.setAutoscrolls(true);
+//        scrollFrame.add(label);
+//        scrollFrame.setPreferredSize(new Dimension( TEXT_PANEL_WIDTH - 40,100));
+//        scrollFrame.setBounds(10, y, TEXT_PANEL_WIDTH - 50, 300);
+//        panel.add(scrollFrame);
+
+        label.setBounds(20, y, TEXT_PANEL_WIDTH - 40, 300);
+        label.setVerticalAlignment(SwingConstants.TOP);
+        panel.add(label);
+        labels.put("logger", label);
+
+        return  panel;
     }
 }
