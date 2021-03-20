@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class MyPanel extends JPanel {
-    private final static int CELL_SIZE = 32;
+    private final static int CELL_SIZE = 30;
     private static final Color TREE_COLOR = new Color(15, 167, 136);
     private static final Color GREEN_COLOR = new Color(105, 187, 106);
     private static final Place OUT = new Place(new PlaceHolder(Types.BOUNDARY), Types.BLACK);

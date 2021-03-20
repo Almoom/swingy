@@ -2,10 +2,12 @@ package ru.zl.school.ljalikak.view;
 
 import ru.zl.school.ljalikak.Person;
 import ru.zl.school.ljalikak.Race;
+import ru.zl.school.ljalikak.controller.Actions;
 import ru.zl.school.ljalikak.controller.ControllerGUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,7 +20,7 @@ public class MyFrame extends JFrame {
     private KeyListener listener;
     private Map<String, JLabel> labels;
     private static final String[] LABELS = {"NAME", "HP", "LEVEL", "EXP", "next exp", "ATTACK", "DEFENSE", "HELMET"};
-    private static final int GAME_PANEL_HEIGHT = 350;
+    private static final int GAME_PANEL_HEIGHT = 352;
     private static final int GAME_PANEL_WIDTH = 490;
     private static final int TEXT_PANEL_WIDTH = 300;
 
@@ -48,19 +50,19 @@ public class MyFrame extends JFrame {
         this.controllerFrame = controllerFrame;
         gamePanel = new MyPanel(GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
         gamePanel.setBounds(0, 0, GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
+        gamePanel.setBackground(new Color(20, 240, 116));
 
         textPanel = createTextPane();
         textPanel.setBounds(GAME_PANEL_WIDTH + 10, 10, TEXT_WIDTH - 20, GAME_PANEL_HEIGHT - 40);
 
         setTitle("Swingy by Ljalikak");
-        setBounds(500, 200, 490, 350);
+        setBounds(500, 200, GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
         c = getContentPane();
         c.setLayout(null);
         c.setBackground(new Color(33, 33, 33));
-        //#d9af2f - yellow
 
         title = new MyMainLabel("Pip-boy game");
         c.add(title);
@@ -124,21 +126,18 @@ public class MyFrame extends JFrame {
 
     public void repainForGame(Person person) {
         getContentPane().removeAll();
-
-//        c.removeAll();
-//        setBounds(0,0,GAME_PANEL_WIDTH + TEXT_PANEL_WIDTH, GAME_PANEL_HEIGHT);
         setBounds(getX(), getY(), GAME_PANEL_WIDTH + TEXT_PANEL_WIDTH, GAME_PANEL_HEIGHT);
         add(gamePanel);
         add(textPanel);
-//        addKeyListener(listener);
+        addKeyListener(listener);
 
-        repaint();
+        refresh();
     }
 
     private JPanel createTextPane() {
         JPanel panel = new JPanel(null);
-        panel.setSize(TEXT_PANEL_WIDTH - 20, GAME_PANEL_HEIGHT);
-        panel.setBackground(Color.GRAY);
+        panel.setSize(TEXT_PANEL_WIDTH - 5, GAME_PANEL_HEIGHT);
+        panel.setBackground(new Color(217, 175, 47));
 
         labels = new HashMap<>();
 
@@ -172,5 +171,22 @@ public class MyFrame extends JFrame {
 //        labels.put("logger", label);
 
         return  panel;
+    }
+
+    public void refresh() {
+
+//        model.fillEnvironment(gamePanel.getEnv());
+//        Warrior person = model.getPlayer();
+//        updateField(NAME, person.getName());
+//        updateField(HP, Integer.toString(person.getHp()));
+//        updateField(LEVEL, Integer.toString(person.getLevel()));
+//        updateField(EXP, Integer.toString(person.getExperience()));
+//        updateField("next exp", Integer.toString(person.expNextLevel));
+//        updateField(DEFENSE, Integer.toString(person.getDefence()));
+//        updateField(HELMET, Integer.toString(person.getHelmet()));
+//        updateField(ATTACK, Integer.toString(person.getAttack()));
+//        updateField("logger", "<html>".concat(person.getLog().replace("\n", "<br>").concat("</html>")));
+
+        repaint();
     }
 }
