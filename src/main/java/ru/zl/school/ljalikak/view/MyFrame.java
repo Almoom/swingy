@@ -2,14 +2,18 @@ package ru.zl.school.ljalikak.view;
 
 import ru.zl.school.ljalikak.Person;
 import ru.zl.school.ljalikak.Race;
+import ru.zl.school.ljalikak.controller.Actions;
 import ru.zl.school.ljalikak.controller.ControllerGUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static ru.zl.school.ljalikak.view.Warrior.*;
 
 public class MyFrame extends JFrame {
     ControllerGUI controllerFrame;
@@ -17,7 +21,7 @@ public class MyFrame extends JFrame {
     private JPanel textPanel;
     private KeyListener listener;
     private Map<String, JLabel> labels;
-    private static final String[] LABELS = {"NAME", "HP", "LEVEL", "EXP", "next exp", "ATTACK", "DEFENSE", "HELMET"};
+    private static final String[] LABELS = {NAME, HP, LEVEL, EXP, "next exp", ATTACK, DEFENSE, HELMET};
     private static final int HELLO_PANEL_HEIGHT = 352;
     private static final int HELLO_PANEL_WIDTH = 490;
     private static final int GAME_PANEL_WIDTH = 330;
@@ -53,6 +57,27 @@ public class MyFrame extends JFrame {
 
         textPanel = createTextPane();
         textPanel.setBounds(GAME_PANEL_WIDTH + 10, 10, TEXT_WIDTH - 20, HELLO_PANEL_HEIGHT - 40);
+        listener = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                Actions action = Actions.getAction(e.getKeyChar());
+                try {
+                    controllerFrame.executeCommand(action);
+                } catch (RuntimeException ex) {
+                    JOptionPane.showMessageDialog(null,
+                            "Player is dead!!!",
+                            "Game Over",
+                            JOptionPane.PLAIN_MESSAGE);
+                    repainForGame(null);
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        };
 
         setTitle("Swingy by Ljalikak");
         setBounds(500, 200, HELLO_PANEL_WIDTH, HELLO_PANEL_HEIGHT);

@@ -1,5 +1,7 @@
 package ru.zl.school.ljalikak;
 
+import ru.zl.school.ljalikak.view.PlaceHolder;
+
 public class Place {
     private PlaceHolder object;
     private Types type;

@@ -2,6 +2,7 @@ package ru.zl.school.ljalikak.controller;
 
 import ru.zl.school.ljalikak.Person;
 import ru.zl.school.ljalikak.model.DAOh2;
+import ru.zl.school.ljalikak.model.Level;
 import ru.zl.school.ljalikak.view.MyGameFrame;
 import ru.zl.school.ljalikak.view.MyFrame;
 
@@ -50,5 +51,17 @@ public class ControllerGUI implements IController {
     @Override
     public void closeViews() {
 
+    }
+
+    public void executeCommand(Actions action) {
+        switch (action) {
+            case MOVE_UP : tryMovePlayer(Level.UP); break;
+            case MOVE_DOWN: tryMovePlayer(Level.DOWN); break;
+            case MOVE_LEFT: tryMovePlayer(Level.LEFT); break;
+            case MOVE_RIGHT: tryMovePlayer(Level.RIGHT); break;
+            case EXIT: exit(); break;
+            default:
+                break;
+        }
     }
 }

@@ -3,7 +3,6 @@ package ru.zl.school.ljalikak.view;
 
 
 import ru.zl.school.ljalikak.Place;
-import ru.zl.school.ljalikak.PlaceHolder;
 import ru.zl.school.ljalikak.Types;
 
 import javax.imageio.ImageIO;
