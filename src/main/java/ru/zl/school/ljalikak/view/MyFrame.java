@@ -2,12 +2,10 @@ package ru.zl.school.ljalikak.view;
 
 import ru.zl.school.ljalikak.Person;
 import ru.zl.school.ljalikak.Race;
-import ru.zl.school.ljalikak.controller.Actions;
 import ru.zl.school.ljalikak.controller.ControllerGUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,8 +18,9 @@ public class MyFrame extends JFrame {
     private KeyListener listener;
     private Map<String, JLabel> labels;
     private static final String[] LABELS = {"NAME", "HP", "LEVEL", "EXP", "next exp", "ATTACK", "DEFENSE", "HELMET"};
-    private static final int GAME_PANEL_HEIGHT = 352;
-    private static final int GAME_PANEL_WIDTH = 490;
+    private static final int HELLO_PANEL_HEIGHT = 352;
+    private static final int HELLO_PANEL_WIDTH = 490;
+    private static final int GAME_PANEL_WIDTH = 330;
     private static final int TEXT_PANEL_WIDTH = 300;
 
     private static int TEXT_WIDTH = 300;
@@ -48,15 +47,15 @@ public class MyFrame extends JFrame {
     public MyFrame(ControllerGUI controllerFrame) throws IOException {
 
         this.controllerFrame = controllerFrame;
-        gamePanel = new MyPanel(GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
-        gamePanel.setBounds(0, 0, GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
+        gamePanel = new MyPanel(HELLO_PANEL_WIDTH, HELLO_PANEL_HEIGHT);
+        gamePanel.setBounds(0, 0, HELLO_PANEL_WIDTH, HELLO_PANEL_HEIGHT);
         gamePanel.setBackground(new Color(20, 240, 116));
 
         textPanel = createTextPane();
-        textPanel.setBounds(GAME_PANEL_WIDTH + 10, 10, TEXT_WIDTH - 20, GAME_PANEL_HEIGHT - 40);
+        textPanel.setBounds(GAME_PANEL_WIDTH + 10, 10, TEXT_WIDTH - 20, HELLO_PANEL_HEIGHT - 40);
 
         setTitle("Swingy by Ljalikak");
-        setBounds(500, 200, GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
+        setBounds(500, 200, HELLO_PANEL_WIDTH, HELLO_PANEL_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -126,7 +125,8 @@ public class MyFrame extends JFrame {
 
     public void repainForGame(Person person) {
         getContentPane().removeAll();
-        setBounds(getX(), getY(), GAME_PANEL_WIDTH + TEXT_PANEL_WIDTH, GAME_PANEL_HEIGHT);
+        setBounds(getX(), getY(), GAME_PANEL_WIDTH + TEXT_PANEL_WIDTH, HELLO_PANEL_HEIGHT);
+        gamePanel.setBounds(0, 0, GAME_PANEL_WIDTH , HELLO_PANEL_HEIGHT);
         add(gamePanel);
         add(textPanel);
         addKeyListener(listener);
@@ -136,7 +136,7 @@ public class MyFrame extends JFrame {
 
     private JPanel createTextPane() {
         JPanel panel = new JPanel(null);
-        panel.setSize(TEXT_PANEL_WIDTH - 5, GAME_PANEL_HEIGHT);
+        panel.setSize(TEXT_PANEL_WIDTH - 5, HELLO_PANEL_HEIGHT);
         panel.setBackground(new Color(217, 175, 47));
 
         labels = new HashMap<>();
