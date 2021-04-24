@@ -2,11 +2,9 @@ package ru.zl.school.ljalikak.controller;
 
 import ru.zl.school.ljalikak.Person;
 import ru.zl.school.ljalikak.model.DAOh2;
-import ru.zl.school.ljalikak.view.MyGameFrame;
 import ru.zl.school.ljalikak.view.MyRegistrationConsole;
 
 import java.awt.*;
-import java.io.IOException;
 
 public class ControllerConsole implements IController {
     private static DAOh2 daoH2 = DAOh2.getProvider();
@@ -42,6 +40,11 @@ public class ControllerConsole implements IController {
 
     @Override
     public void closeViews() {
+
+    }
+
+    @Override
+    public void fillEnvironment(Person person) {
 
     }
 }

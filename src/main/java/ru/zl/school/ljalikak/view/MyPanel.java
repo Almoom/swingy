@@ -24,8 +24,8 @@ public class MyPanel extends JPanel {
     private TexturePaint stone;
 
     public MyPanel(int width, int height) throws IOException {
-        width = width / CELL_SIZE;
-        height = height / CELL_SIZE;
+        width = 11;
+        height = 11;
         env = new Place[height][width];
 
         for (int i = 0; i < height; i++) {

@@ -63,6 +63,7 @@ public class MyFrame extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
+                System.out.println(e.getKeyChar());
                 Actions action = Actions.getAction(e.getKeyChar());
                 try {
                     controllerFrame.executeCommand(action);
@@ -150,13 +151,15 @@ public class MyFrame extends JFrame {
 
     public void repainForGame(Person person) {
         getContentPane().removeAll();
+        dispose();
         setBounds(getX(), getY(), GAME_PANEL_WIDTH + TEXT_PANEL_WIDTH, HELLO_PANEL_HEIGHT);
         gamePanel.setBounds(0, 0, GAME_PANEL_WIDTH , HELLO_PANEL_HEIGHT);
         add(gamePanel);
         add(textPanel);
         addKeyListener(listener);
 
-        refresh();
+        refresh(person);
+        setVisible(true);
     }
 
     private JPanel createTextPane() {
@@ -198,9 +201,9 @@ public class MyFrame extends JFrame {
         return  panel;
     }
 
-    public void refresh() {
+    public void refresh(Person person) {
 
-//        model.fillEnvironment(gamePanel.getEnv());
+        controllerFrame.fillEnvironment(person);
 //        Warrior person = model.getPlayer();
 //        updateField(NAME, person.getName());
 //        updateField(HP, Integer.toString(person.getHp()));

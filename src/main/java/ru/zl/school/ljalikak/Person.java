@@ -1,8 +1,10 @@
 package ru.zl.school.ljalikak;
 
+import ru.zl.school.ljalikak.view.PlaceHolder;
+
 import java.io.Serializable;
 
-public class Person implements Serializable {
+public class Person extends PlaceHolder implements Serializable {
     private String login;
     private String password;
     private Race race;
@@ -13,6 +15,7 @@ public class Person implements Serializable {
     private int hitPoints;
 
     public Person(String login, String password, Race Race) {
+        super(Types.PlAYER);
         this.login = login;
         this.password = password;
         this.race = Race;
@@ -24,6 +27,7 @@ public class Person implements Serializable {
     }
 
     public Person(String login, String password, Race Race, int level, int experience, int attack, int defense, int hitPoints) {
+        super(Types.PlAYER);
         this.login = login;
         this.password = password;
         this.race = Race;
