@@ -5,8 +5,6 @@ import ru.zl.school.ljalikak.view.PlaceHolder;
 public class Place {
     private PlaceHolder object;
     private Types type;
-    //тут будут эффекты местности и ее внешний вид...
-
 
     public Place(PlaceHolder object) {
         this.object = object;

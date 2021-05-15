@@ -13,6 +13,5 @@ public interface IController {
     public void exit();
     public void closeViews();
 
-    void fillEnvironment(Person person);
 //    public void exit(String message);
 }

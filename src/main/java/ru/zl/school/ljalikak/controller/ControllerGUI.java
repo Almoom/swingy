@@ -5,6 +5,7 @@ import ru.zl.school.ljalikak.Place;
 import ru.zl.school.ljalikak.model.DAOh2;
 import ru.zl.school.ljalikak.model.Level;
 import ru.zl.school.ljalikak.view.MyFrame;
+import ru.zl.school.ljalikak.view.Warrior;
 
 import java.awt.*;
 import java.io.IOException;
@@ -12,16 +13,20 @@ import java.io.IOException;
 public class ControllerGUI implements IController {
     private static DAOh2 daoH2 = DAOh2.getProvider();
     MyFrame f;
+    private Level level;
     private Place[][] env;
 
     public ControllerGUI() throws IOException {
         f = new MyFrame(this);
-        env = new Place[11][11];
+    }
+
+    public void setEnv(Place[][] env) {
+        this.env = env;
     }
 
     @Override
     public void tryMovePlayer(Point shift) {
-
+        level.tryMovePerson(shift);
     }
 
     @Override
@@ -43,7 +48,17 @@ public class ControllerGUI implements IController {
 
     private void startGame(Person person) {
         f.repainForGame(person);
+        level = new Level(person);
+        refresh();
     }
+
+
+    public void refresh(){
+        if (level != null) {
+            level.fillEnvironment(env);
+        }
+    }
+
 
     @Override
     public void exit() {
@@ -53,22 +68,6 @@ public class ControllerGUI implements IController {
     @Override
     public void closeViews() {
 
-    }
-
-    @Override
-    public void fillEnvironment(Person player) {
-        int height = env.length;
-        int width = env[0].length;
-        Point center = player.getPos();
-
-//        for (int i = 0; i < height; i++) {
-//            for (int j = 0; j < width; j++) {
-//                int y = center.y + i - height / 2;
-//                int x = center.x + j - width / 2;
-//
-//                env[i][j] = getPlace(x, y);
-//            }
-//        }
     }
 
     public void executeCommand(Actions action) {

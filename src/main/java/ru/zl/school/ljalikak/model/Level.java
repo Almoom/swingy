@@ -1,5 +1,6 @@
 package ru.zl.school.ljalikak.model;
 
+import ru.zl.school.ljalikak.Person;
 import ru.zl.school.ljalikak.Place;
 import ru.zl.school.ljalikak.Types;
 import ru.zl.school.ljalikak.view.PlaceHolder;
@@ -7,6 +8,7 @@ import ru.zl.school.ljalikak.view.Warrior;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -20,36 +22,35 @@ public class Level {
     final static private PlaceHolder BOUNDARY = new PlaceHolder(Types.BOUNDARY);
     final static private Place OUT = new Place(BOUNDARY, Types.BLACK);
 
-
+    private final int SIZE = 11;
     private int width;
     private int height;
     private int level;
 
     private Place[][] map;
     private List<Warrior> animals;
-    private Warrior player;
+    private Person player;
 
     private Random random;
 
     private StringBuilder logger;
     private boolean loggerOn;
 
-    // надо сделать чтение карты с файла
-    public Level(int width, int height) {
-        this.width = width;
-        this.height = height;
-        level = 1;
-    }
-
-    public Level(Warrior player) {
+    public Level(Person player) {
         level = player.getLevel();
         int size = getSize(level);
         this.width = size;
         this.height = size;
 
         initMap();
-        player.setXY(size / 2, size / 2);
+        player.setXY(6,6);
         setPlayer(player);
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                System.out.print(map[i][j].getType() + " ");
+            }
+            System.out.println();
+        }
 
         logger = new StringBuilder("");
     }
@@ -58,7 +59,7 @@ public class Level {
         return (level - 1) * 5 + 10 - (level % 2);
     }
 
-    public void setPlayer(Warrior player) {
+    public void setPlayer(Person player) {
         this.player = player;
         insertOnMap(player);
     }
@@ -66,12 +67,12 @@ public class Level {
     public void initMap() {
         random = new Random();
         animals = new ArrayList<>();
-        map = new Place[height][width];
+        map = new Place[SIZE][SIZE];
 
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 map[i][j] = new Place(EMPTY);
-                if (i == height / 2 && j == width / 2)
+                if (i == SIZE / 2 && j == SIZE / 2)
                     continue;
                 int tmp = random.nextInt(100);
                 if (tmp < 4) {
@@ -87,7 +88,7 @@ public class Level {
     }
 
     private void insertOnMap(PlaceHolder object, int x, int y) {
-        if (y >= 0 && y < height && x >= 0 && x < width) {
+        if (y >= 0 && y < SIZE && x >= 0 && x < SIZE) {
             map[y][x].setObject(object);
             if (object != EMPTY) {
                 object.setXY(x, y);
@@ -143,6 +144,15 @@ public class Level {
             Warrior winner = warrior.fight(enemy);
             insertOnMap(winner, enemy.getX(), enemy.getY());
             getPlace(winner.getX(), winner.getY()).setType(Types.BLOOD);
+        }
+    }
+
+    public void tryMovePerson(Point shift) {
+        Place place = getPlace(shift.x + player.getX(), shift.y + player.getY());
+        if (place != OUT && place.getObject() == EMPTY) {
+            insertOnMap(EMPTY, player.getX(), player.getY());
+            player.setXY(shift.x + player.getX(), shift.y + player.getY());
+            insertOnMap(player);
         }
     }
 

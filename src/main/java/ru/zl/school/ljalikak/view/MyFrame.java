@@ -1,6 +1,7 @@
 package ru.zl.school.ljalikak.view;
 
 import ru.zl.school.ljalikak.Person;
+import ru.zl.school.ljalikak.Place;
 import ru.zl.school.ljalikak.Race;
 import ru.zl.school.ljalikak.controller.Actions;
 import ru.zl.school.ljalikak.controller.ControllerGUI;
@@ -57,6 +58,9 @@ public class MyFrame extends JFrame {
 
         textPanel = createTextPane();
         textPanel.setBounds(GAME_PANEL_WIDTH + 10, 10, TEXT_WIDTH - 20, HELLO_PANEL_HEIGHT - 40);
+
+        controllerFrame.setEnv(gamePanel.getEnv());
+
         listener = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
@@ -74,6 +78,7 @@ public class MyFrame extends JFrame {
                             JOptionPane.PLAIN_MESSAGE);
                     repainForGame(null);
                 }
+                refresh(null);
             }
 
             @Override
@@ -203,7 +208,10 @@ public class MyFrame extends JFrame {
 
     public void refresh(Person person) {
 
-        controllerFrame.fillEnvironment(person);
+//        controllerFrame.fillEnvironment(person);
+
+        controllerFrame.refresh();
+
 //        Warrior person = model.getPlayer();
 //        updateField(NAME, person.getName());
 //        updateField(HP, Integer.toString(person.getHp()));

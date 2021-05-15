@@ -42,9 +42,4 @@ public class ControllerConsole implements IController {
     public void closeViews() {
 
     }
-
-    @Override
-    public void fillEnvironment(Person person) {
-
-    }
 }
