@@ -6,11 +6,23 @@ import ru.zl.school.ljalikak.Race;
 import ru.zl.school.ljalikak.controller.Actions;
 import ru.zl.school.ljalikak.controller.ControllerGUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ImageObserver;
+import java.awt.image.RenderedImage;
+import java.awt.image.renderable.RenderableImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.text.AttributedCharacterIterator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,9 +102,17 @@ public class MyFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
+        URL imgURL = MyFrame.class.getResource("/men.png");
+        ImageIcon icon = new ImageIcon(imgURL);
+        JButton button = new JButton();
+        button.setIcon(icon);
+        button.setSize(50, 50);
+        button.setLocation(200, 250);
+
         c = getContentPane();
         c.setLayout(null);
         c.setBackground(new Color(33, 33, 33));
+        c.add(button);
 
         title = new MyMainLabel("Pip-boy game");
         c.add(title);
