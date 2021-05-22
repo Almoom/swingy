@@ -22,6 +22,6 @@ public class MyMainLabel extends JLabel {
         setFont(font);
         setForeground(color);
         setSize(500, 60);
-        setLocation(130, 20);
+        setLocation(130, 10);
     }
 }

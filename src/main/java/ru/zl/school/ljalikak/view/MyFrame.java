@@ -50,16 +50,18 @@ public class MyFrame extends JFrame {
     private JLabel title;
     private JLabel login;
     private JTextField tlogin;
-    private JLabel password;
-    private JTextField tpassword;
     private JLabel race;
+    private JLabel prepared;
     private JRadioButton human;
     private JRadioButton mutant;
     private JRadioButton ghoul;
     private ButtonGroup racep;
     private JButton create;
     private JButton cont;
-    private Race type;
+    private JButton prepMen;
+    private JButton prepWomen;
+    private JButton prepDog;
+    private Race type = Race.HUMAN;
 
     public MyFrame(ControllerGUI controllerFrame) throws IOException {
 
@@ -102,17 +104,9 @@ public class MyFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
-        URL imgURL = MyFrame.class.getResource("/men.png");
-        ImageIcon icon = new ImageIcon(imgURL);
-        JButton button = new JButton();
-        button.setIcon(icon);
-        button.setSize(50, 50);
-        button.setLocation(200, 250);
-
         c = getContentPane();
         c.setLayout(null);
         c.setBackground(new Color(33, 33, 33));
-        c.add(button);
 
         title = new MyMainLabel("Pip-boy game");
         c.add(title);
@@ -120,12 +114,10 @@ public class MyFrame extends JFrame {
         c.add(login);
         tlogin = new MyTextField();
         c.add(tlogin);
-        password = new MyLabel("Password");
-        c.add(password);
-        tpassword = new MyTextField();
-        c.add(tpassword);
         race = new MyLabel("Race");
         c.add(race);
+        prepared = new MyLabel("<html>Or use</br> prepared</html>");
+        c.add(prepared);
 
         human = new MyRadioButton(Race.HUMAN.toString().toLowerCase());
         human.addActionListener(e -> type = Race.valueOf(e.getActionCommand().toUpperCase()));
@@ -144,15 +136,72 @@ public class MyFrame extends JFrame {
         racep.add(ghoul);
         racep.add(mutant);
 
+
+        prepMen = new MyPrepButton(MyFrame.class.getResource("/men.png"));
+        prepMen.addActionListener(e -> {
+            try {
+                if (tlogin.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Введите логин",
+                            "Message",
+                            JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    controllerFrame.createNewPersonAndStartGame(new Person(tlogin.getText(), type));
+                }
+            } catch (RuntimeException ex) {
+                throw new AuthException(ex);
+            }
+        });
+
+        prepWomen = new MyPrepButton(MyFrame.class.getResource("/dog.png"));
+        prepWomen.addActionListener(e -> {
+            try {
+                if (tlogin.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Введите логин",
+                            "Message",
+                            JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    controllerFrame.createNewPersonAndStartGame(new Person(tlogin.getText(), type));
+                }
+            } catch (RuntimeException ex) {
+                throw new AuthException(ex);
+            }
+        });
+
+        prepDog = new MyPrepButton(MyFrame.class.getResource("/women.png"));
+        prepDog.addActionListener(e -> {
+            try {
+                if (tlogin.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Введите логин и пароль",
+                            "Message",
+                            JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    controllerFrame.createNewPersonAndStartGame(new Person(tlogin.getText(), type));
+                }
+            } catch (RuntimeException ex) {
+                throw new AuthException(ex);
+            }
+        });
+
+        c.add(prepMen);
+        c.add(prepWomen);
+        c.add(prepDog);
+
         create = new MyButton("new");
         create.addActionListener(e -> {
             try {
-                controllerFrame.createNewPersonAndStartGame(new Person(tlogin.getText(), tpassword.getText(), type));
+                if (tlogin.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Введите логин",
+                            "Message",
+                            JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    controllerFrame.createNewPersonAndStartGame(new Person(tlogin.getText(), type));
+                }
             } catch (RuntimeException ex) {
-                JOptionPane.showMessageDialog(null,
-                        ex.getMessage(),
-                        "Message",
-                        JOptionPane.PLAIN_MESSAGE);
+                throw new AuthException(ex);
             }
         });
         c.add(create);
@@ -160,12 +209,16 @@ public class MyFrame extends JFrame {
         cont = new MyButton("continue");
         cont.addActionListener(e -> {
             try {
-                controllerFrame.findPersonAndStartGame(tlogin.getText(), tpassword.getText());
+                if (tlogin.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Введите логин",
+                            "Message",
+                            JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    controllerFrame.findPersonAndStartGame(tlogin.getText());
+                }
             } catch (RuntimeException ex) {
-                JOptionPane.showMessageDialog(null,
-                        ex.getMessage(),
-                        "Message",
-                        JOptionPane.PLAIN_MESSAGE);
+                throw new AuthException(ex);
             }
         });
         c.add(cont);

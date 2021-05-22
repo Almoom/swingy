@@ -16,11 +16,11 @@ public class DAOh2 implements IDAO {
     private static final String password = "123456";
     private Connection connection;
 
-    static final String READ_PERSON = "SELECT PERSON FROM PERSONS WHERE LOGIN = ? AND PASSWORD = ?";
-    static final String WRITE_PERSON = "INSERT INTO PERSONS(LOGIN, PASSWORD, PERSON) VALUES (?, ?, ?)";
+    static final String READ_PERSON = "SELECT PERSON FROM PERSONS WHERE LOGIN = ?";
+    static final String WRITE_PERSON = "INSERT INTO PERSONS(LOGIN, PERSON) VALUES (?, ?)";
     static final String UPDATE_PERSON = "UPDATE PERSONS SET PERSON = ? WHERE LOGIN = ?";
     static final String CHECK_LOGIN_USES = "SELECT * FROM PERSONS WHERE LOGIN = ?";
-    static final String CHECK_EXIST_PERSON = "SELECT * FROM PERSONS WHERE LOGIN = ? AND PASSWORD = ?";
+    static final String CHECK_EXIST_PERSON = "SELECT * FROM PERSONS WHERE LOGIN = ?";
     
     public static DAOh2 getProvider() {
         try {
@@ -38,9 +38,9 @@ public class DAOh2 implements IDAO {
         dropTable();
         createTable();
 
-        write(new Person("name1", "1111", Race.HUMAN));
-        write(new Person("name2", "1111", Race.MUTANT));
-        write(new Person("name3", "1111", Race.GHOUL));
+        write(new Person("name1", Race.HUMAN));
+        write(new Person("name2", Race.MUTANT));
+        write(new Person("name3", Race.GHOUL));
 
 //        update(new Person("name3", "1111", Race.GHOUL, 100, 100, 100, 100, 100));
     }
@@ -69,7 +69,6 @@ public class DAOh2 implements IDAO {
             statement.execute("CREATE TABLE IF NOT EXISTS PERSONS (" +
                     "ID INTEGER PRIMARY KEY auto_increment, " +
                     "LOGIN VARCHAR(128), " +
-                    "PASSWORD VARCHAR(128), " +
                     "PERSON BLOB);"
             );
         } catch (SQLException throwables) {
@@ -82,8 +81,7 @@ public class DAOh2 implements IDAO {
         try (PreparedStatement pstmt = connection.prepareStatement(WRITE_PERSON)) {
             checkLogin(person.getLogin());
             pstmt.setString(1, person.getLogin());
-            pstmt.setString(2, person.getPassword());
-            pstmt.setObject(3, person);
+            pstmt.setObject(2, person);
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -102,13 +100,12 @@ public class DAOh2 implements IDAO {
     }
 
     @Override
-    public Person read(String login, String password) {
+    public Person read(String login) {
         Object object = null;
         try (PreparedStatement pstmt = connection.prepareStatement(READ_PERSON)) {
-            checkExist(login, password);
+            checkExist(login);
 
             pstmt.setString(1, login);
-            pstmt.setString(2, password);
 
             ResultSet rs = pstmt.executeQuery();
             rs.next();
@@ -123,12 +120,11 @@ public class DAOh2 implements IDAO {
         return (Person) object;
     }
 
-    private void checkExist(String login, String password) throws SQLException {
+    private void checkExist(String login) throws SQLException {
         try (PreparedStatement pstmt = connection.prepareStatement(CHECK_EXIST_PERSON)) {
             pstmt.setString(1, login);
-            pstmt.setString(2, password);
             if (!pstmt.executeQuery().first()) {
-                throw new RuntimeException("Login or password is incorrect!");
+                throw new RuntimeException("Login is incorrect!");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -6,7 +6,6 @@ import java.io.Serializable;
 
 public class Person extends PlaceHolder implements Serializable {
     private String login;
-    private String password;
     private Race race;
     private int level;
     private int experience;
@@ -14,22 +13,31 @@ public class Person extends PlaceHolder implements Serializable {
     private int defense;
     private int hitPoints;
 
-    public Person(String login, String password, Race Race) {
+    public Person(String login, Race race) {
         super(Types.PlAYER);
+//        if (login.isEmpty())
         this.login = login;
-        this.password = password;
-        this.race = Race;
-        this.level = 1;
-        this.experience = 0;
-        this.attack = 1;
-        this.defense = 1;
-        this.hitPoints = 100;
+        this.race = race;
+        switch (race) {
+            case HUMAN: {
+                this.level = 1;
+            } break;
+            case GHOUL: {
+                this.level = 5;
+            } break;
+            case MUTANT: {
+                this.level = 10;
+            } break;
+        }
+        this.experience = lvlCalc(level - 1);
+        this.attack = level * 2;
+        this.defense = level * 2;
+        this.hitPoints = level * 2;
     }
 
-    public Person(String login, String password, Race Race, int level, int experience, int attack, int defense, int hitPoints) {
+    public Person(String login, Race Race, int level, int experience, int attack, int defense, int hitPoints) {
         super(Types.PlAYER);
         this.login = login;
-        this.password = password;
         this.race = Race;
         this.level = level;
         this.experience = experience;
@@ -40,10 +48,6 @@ public class Person extends PlaceHolder implements Serializable {
 
     public String getLogin() {
         return login;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public Race getRace() {
@@ -72,8 +76,12 @@ public class Person extends PlaceHolder implements Serializable {
 
     @Override
     public String toString() {
-        return login + '\t' + password + '\t' + race + '\t'
+        return login + '\t' + race + '\t'
                 + level + '\t' + experience + '\t' + attack + '\t'
                 + defense + '\t' + hitPoints;
+    }
+
+    private int lvlCalc(int level) {
+        return level * 1000 + (level - 1) * (level - 1) * 450;
     }
 }

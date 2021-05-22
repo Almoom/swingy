@@ -11,6 +11,6 @@ public class MyTextField extends JTextField {
         super();
         setFont(font);
         setSize(190, 20);
-        setLocation(200, 100 + 50 * count++);
+        setLocation(200, 85 + 50 * count++);
     }
 }

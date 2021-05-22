@@ -20,9 +20,14 @@ public class MyLabel extends JLabel {
 
     public MyLabel(String text) {
         super(text);
-        setSize(100, 30);
+        if (text.contains("</br")) {
+            setSize(100, 50);
+            setLocation(100, 72 + 50 * count++);
+        } else {
+            setSize(100, 30);
+            setLocation(100, 85 + 50 * count++);
+        }
         setForeground(color);
-        setLocation(100, 100 + 50 * count++);
         setFont(font);
     }
 }

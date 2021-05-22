@@ -29,8 +29,8 @@ public class ControllerConsole implements IController {
     }
 
     @Override
-    public void findPersonAndStartGame(String login, String password) {
-        daoH2.read(login, password);
+    public void findPersonAndStartGame(String login) {
+        daoH2.read(login);
     }
 
     @Override

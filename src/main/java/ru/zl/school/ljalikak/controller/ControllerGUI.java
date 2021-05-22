@@ -41,8 +41,8 @@ public class ControllerGUI implements IController {
     }
 
     @Override
-    public void findPersonAndStartGame(String login, String password) {
-        Person person = daoH2.read(login, password);
+    public void findPersonAndStartGame(String login) {
+        Person person = daoH2.read(login);
         startGame(person);
     }
 
