@@ -2,6 +2,7 @@ package ru.zl.school.ljalikak;
 
 import ru.zl.school.ljalikak.view.PlaceHolder;
 
+import javax.swing.*;
 import java.io.Serializable;
 
 public class Person extends PlaceHolder implements Serializable {
@@ -15,7 +16,6 @@ public class Person extends PlaceHolder implements Serializable {
 
     public Person(String login, Race race) {
         super(Types.PlAYER);
-//        if (login.isEmpty())
         this.login = login;
         this.race = race;
         switch (race) {
@@ -35,10 +35,10 @@ public class Person extends PlaceHolder implements Serializable {
         this.hitPoints = level * 2;
     }
 
-    public Person(String login, Race Race, int level, int experience, int attack, int defense, int hitPoints) {
+    public Person(String login, Race race, int level, int experience, int attack, int defense, int hitPoints) {
         super(Types.PlAYER);
         this.login = login;
-        this.race = Race;
+        this.race = race;
         this.level = level;
         this.experience = experience;
         this.attack = attack;

@@ -1,28 +1,15 @@
 package ru.zl.school.ljalikak.view;
 
 import ru.zl.school.ljalikak.Person;
-import ru.zl.school.ljalikak.Place;
 import ru.zl.school.ljalikak.Race;
 import ru.zl.school.ljalikak.controller.Actions;
 import ru.zl.school.ljalikak.controller.ControllerGUI;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
-import java.awt.image.ImageObserver;
-import java.awt.image.RenderedImage;
-import java.awt.image.renderable.RenderableImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.text.AttributedCharacterIterator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -121,110 +108,80 @@ public class MyFrame extends JFrame {
 
         human = new MyRadioButton(Race.HUMAN.toString().toLowerCase());
         human.addActionListener(e -> type = Race.valueOf(e.getActionCommand().toUpperCase()));
+        human.setToolTipText("Начните игру человеком из Мегатонны с уровня 1!");
         c.add(human);
-
-        mutant = new MyRadioButton(Race.MUTANT.toString().toLowerCase());
-        mutant.addActionListener(e -> type = Race.valueOf(e.getActionCommand().toUpperCase()));
-        c.add(mutant);
 
         ghoul = new MyRadioButton(Race.GHOUL.toString().toLowerCase());
         ghoul.addActionListener(e -> type = Race.valueOf(e.getActionCommand().toUpperCase()));
+        ghoul.setToolTipText("Начните игру гулем из Некрополиса с уровня 5!");
         c.add(ghoul);
+
+        mutant = new MyRadioButton(Race.MUTANT.toString().toLowerCase());
+        mutant.addActionListener(e -> type = Race.valueOf(e.getActionCommand().toUpperCase()));
+        mutant.setToolTipText("Начните игру мутантом из Мирапозы с уровня 10!");
+        c.add(mutant);
 
         racep = new ButtonGroup();
         racep.add(human);
         racep.add(ghoul);
         racep.add(mutant);
 
-
         prepMen = new MyPrepButton(MyFrame.class.getResource("/men.png"));
-        prepMen.addActionListener(e -> {
-            try {
-                if (tlogin.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null,
-                            "Введите логин",
-                            "Message",
-                            JOptionPane.PLAIN_MESSAGE);
-                } else {
-                    controllerFrame.createNewPersonAndStartGame(new Person(tlogin.getText(), type));
-                }
-            } catch (RuntimeException ex) {
-                throw new AuthException(ex);
-            }
-        });
+        prepMen.addActionListener(e -> startNew(new Person(tlogin.getText(), Race.HUMAN, 1, 0, 2, 2, 10)));
+        prepMen.setToolTipText("Вы мужик 1 уровня, с атакой 2, защитой 2 и 10 жизнями");
 
-        prepWomen = new MyPrepButton(MyFrame.class.getResource("/dog.png"));
-        prepWomen.addActionListener(e -> {
-            try {
-                if (tlogin.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null,
-                            "Введите логин",
-                            "Message",
-                            JOptionPane.PLAIN_MESSAGE);
-                } else {
-                    controllerFrame.createNewPersonAndStartGame(new Person(tlogin.getText(), type));
-                }
-            } catch (RuntimeException ex) {
-                throw new AuthException(ex);
-            }
-        });
+        prepDog = new MyPrepButton(MyFrame.class.getResource("/dog.png"));
+        prepDog.addActionListener(e -> startNew(new Person(tlogin.getText(), Race.HUMAN, 1, 0, 2, 1, 15)));
+        prepDog.setToolTipText("Вы пёс 1 уровня, с атакой 2, защитой 1 и 15 жизнями");
 
-        prepDog = new MyPrepButton(MyFrame.class.getResource("/women.png"));
-        prepDog.addActionListener(e -> {
-            try {
-                if (tlogin.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null,
-                            "Введите логин и пароль",
-                            "Message",
-                            JOptionPane.PLAIN_MESSAGE);
-                } else {
-                    controllerFrame.createNewPersonAndStartGame(new Person(tlogin.getText(), type));
-                }
-            } catch (RuntimeException ex) {
-                throw new AuthException(ex);
-            }
-        });
+        prepWomen = new MyPrepButton(MyFrame.class.getResource("/women.png"));
+        prepWomen.addActionListener(e -> startNew(new Person(tlogin.getText(), Race.HUMAN, 1, 0, 1, 2, 15)));
+        prepWomen.setToolTipText("Вы женщина 1 уровня, с атакой 1, защитой 2 и 15 жизнями");
 
         c.add(prepMen);
-        c.add(prepWomen);
         c.add(prepDog);
+        c.add(prepWomen);
+
 
         create = new MyButton("new");
-        create.addActionListener(e -> {
-            try {
-                if (tlogin.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null,
-                            "Введите логин",
-                            "Message",
-                            JOptionPane.PLAIN_MESSAGE);
-                } else {
-                    controllerFrame.createNewPersonAndStartGame(new Person(tlogin.getText(), type));
-                }
-            } catch (RuntimeException ex) {
-                throw new AuthException(ex);
-            }
-        });
+        create.addActionListener(e -> startNew(new Person(tlogin.getText(), type)));
         c.add(create);
 
         cont = new MyButton("continue");
         cont.addActionListener(e -> {
             try {
                 if (tlogin.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null,
-                            "Введите логин",
-                            "Message",
-                            JOptionPane.PLAIN_MESSAGE);
+                    printMsg("Введите логин");
                 } else {
                     controllerFrame.findPersonAndStartGame(tlogin.getText());
                 }
             } catch (RuntimeException ex) {
-                throw new AuthException(ex);
+                ex.printStackTrace();
             }
         });
         c.add(cont);
 
         repaint();
         setVisible(true);
+    }
+
+    public void startNew(Person person) {
+        try {
+            if (tlogin.getText().isEmpty()) {
+                printMsg("Введите логин");
+            } else {
+                controllerFrame.createNewPersonAndStartGame(person);
+            }
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void printMsg(String msg) {
+        JOptionPane.showMessageDialog(null,
+                msg,
+                "Please, stand by...",
+                JOptionPane.PLAIN_MESSAGE);
     }
 
     public void repainForGame(Person person) {

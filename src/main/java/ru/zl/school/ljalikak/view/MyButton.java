@@ -20,9 +20,8 @@ public class MyButton extends JButton {
     public MyButton(String text) {
         super(text);
         setSize(150, 30);
-        setLocation(90 + 160 * count++, 290);
+        setLocation(90 + 160 * count++, 250);
         setFont(font);
-
     }
 
 }
