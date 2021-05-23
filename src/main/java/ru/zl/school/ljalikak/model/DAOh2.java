@@ -3,6 +3,7 @@ package ru.zl.school.ljalikak.model;
 import ru.zl.school.ljalikak.Person;
 import ru.zl.school.ljalikak.Race;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -103,7 +104,7 @@ public class DAOh2 implements IDAO {
     public Person read(String login) {
         Object object = null;
         try (PreparedStatement pstmt = connection.prepareStatement(READ_PERSON)) {
-            checkExist(login);
+            if (!checkExist(login)) return null;
 
             pstmt.setString(1, login);
 
@@ -120,15 +121,20 @@ public class DAOh2 implements IDAO {
         return (Person) object;
     }
 
-    private void checkExist(String login) throws SQLException {
+    private boolean checkExist(String login) throws SQLException {
         try (PreparedStatement pstmt = connection.prepareStatement(CHECK_EXIST_PERSON)) {
             pstmt.setString(1, login);
             if (!pstmt.executeQuery().first()) {
-                throw new RuntimeException("Login is incorrect!");
+                JOptionPane.showMessageDialog(null,
+                        "Игрока с таким логином не существует!",
+                        "Please, stand by...",
+                        JOptionPane.PLAIN_MESSAGE);
+                return false;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return true;
     }
 
     @Override

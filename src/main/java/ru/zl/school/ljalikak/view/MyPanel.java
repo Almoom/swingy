@@ -1,7 +1,5 @@
 package ru.zl.school.ljalikak.view;
 
-
-
 import ru.zl.school.ljalikak.Place;
 import ru.zl.school.ljalikak.Types;
 
@@ -13,19 +11,18 @@ import java.io.IOException;
 
 public class MyPanel extends JPanel {
     private final static int CELL_SIZE = 30;
-    private static final Color TREE_COLOR = new Color(15, 167, 136);
-    private static final Color GREEN_COLOR = new Color(105, 187, 106);
+    private static final Color GREEN_COLOR = new Color(18, 53, 36);
     private static final Place OUT = new Place(new PlaceHolder(Types.BOUNDARY), Types.BLACK);
 
     private Place[][] env;
-    private TexturePaint tree;
-    private TexturePaint salamander;
-    private TexturePaint capybara;
-    private TexturePaint stone;
+    private TexturePaint rad;
+    private TexturePaint enemy;
+    private TexturePaint player;
+    private TexturePaint rock;
 
     public MyPanel(int width, int height) throws IOException {
-        width = 11;
-        height = 11;
+        width = width / CELL_SIZE;
+        height = height / CELL_SIZE;
         env = new Place[height][width];
 
         for (int i = 0; i < height; i++) {
@@ -39,14 +36,14 @@ public class MyPanel extends JPanel {
 
     private void load() throws IOException {
         try {
-            BufferedImage image = ImageIO.read(getClass().getResource("/tree.png"));
-            tree = new TexturePaint(image, new Rectangle(0, 0, 32, 32));
-            image = ImageIO.read(getClass().getResource("/stone.png"));
-            stone = new TexturePaint(image, new Rectangle(0, 0, 32, 32));
-            image = ImageIO.read(getClass().getResource("/capybara.png"));
-            capybara = new TexturePaint(image, new Rectangle(0, 0, 32, 32));
-            image = ImageIO.read(getClass().getResource("/salamander.png"));
-            salamander = new TexturePaint(image, new Rectangle(0, 0, 32, 32));
+            BufferedImage image = ImageIO.read(getClass().getResource("/rad.png"));
+            rad = new TexturePaint(image, new Rectangle(0, 0, 30, 30));
+            image = ImageIO.read(getClass().getResource("/rock.jpeg"));
+            rock = new TexturePaint(image, new Rectangle(0, 0, 30, 30));
+            image = ImageIO.read(getClass().getResource("/pb.png"));
+            player = new TexturePaint(image, new Rectangle(0, 0, 30, 30));
+            image = ImageIO.read(getClass().getResource("/enemy.png"));
+            enemy = new TexturePaint(image, new Rectangle(0, 0, 30, 30));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Could not load images", "Error", JOptionPane.ERROR_MESSAGE);
             throw ex;
@@ -95,23 +92,23 @@ public class MyPanel extends JPanel {
 
         switch (place.getObject().getTypes()) {
             case STONE: {
-                g2.setPaint(stone);
+                g2.setPaint(rock);
                 g2.fillRect(x, y, CELL_SIZE, CELL_SIZE);
                 return;
             }
             case PlAYER: {
-                g2.setPaint(capybara);
+                g2.setPaint(player);
                 g2.fillRect(x, y, CELL_SIZE, CELL_SIZE);
                 return;
             }
             case ANIMAL: {
-                g2.setPaint(salamander);
+                g2.setPaint(enemy);
                 g2.fillRect(x + 2, y + 2, 28, 28);
                 return;
             }
             case BOUNDARY: g2.setColor(Color.black); break;
             case TREE: {
-                g2.setPaint(tree);
+                g2.setPaint(rad);
                 g2.fillRect(x, y, CELL_SIZE, CELL_SIZE);
                 return;
             }

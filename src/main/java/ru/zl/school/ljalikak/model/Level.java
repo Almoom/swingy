@@ -43,7 +43,7 @@ public class Level {
         this.height = size;
 
         initMap();
-        player.setXY(6,6);
+        player.setXY(size/2,size/2);
         setPlayer(player);
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {

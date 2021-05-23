@@ -3,8 +3,9 @@ package ru.zl.school.ljalikak.view;
 import ru.zl.school.ljalikak.Types;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class PlaceHolder {
+public class PlaceHolder implements Serializable {
     protected Types type;
     protected Point pos;
 

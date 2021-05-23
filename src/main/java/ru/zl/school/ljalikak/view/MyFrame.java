@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,10 +51,20 @@ public class MyFrame extends JFrame {
     private JButton prepDog;
     private Race type = Race.HUMAN;
 
+    private static Font font;
+    static {
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/14262.ttf"))
+                    .deriveFont(20f);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
     public MyFrame(ControllerGUI controllerFrame) throws IOException {
 
         this.controllerFrame = controllerFrame;
-        gamePanel = new MyPanel(HELLO_PANEL_WIDTH, HELLO_PANEL_HEIGHT);
+        gamePanel = new MyPanel(GAME_PANEL_WIDTH, GAME_PANEL_WIDTH);
         gamePanel.setBounds(0, 0, HELLO_PANEL_WIDTH, HELLO_PANEL_HEIGHT);
         gamePanel.setBackground(new Color(20, 240, 116));
 
@@ -200,13 +211,15 @@ public class MyFrame extends JFrame {
     private JPanel createTextPane() {
         JPanel panel = new JPanel(null);
         panel.setSize(TEXT_PANEL_WIDTH - 5, HELLO_PANEL_HEIGHT);
-        panel.setBackground(new Color(217, 175, 47));
+        panel.setBackground(new Color(77, 66, 52));
 
         labels = new HashMap<>();
 
         int y = TEXT_START_Y;
         for (String s : LABELS) {
             JLabel label = new JLabel(s);
+            label.setForeground(new Color(217, 175, 47));
+            label.setFont(font);
             label.setBounds(TEXT_START_X, y, TEXT_STEP_X, TEXT_START_Y);
             panel.add(label);
 
