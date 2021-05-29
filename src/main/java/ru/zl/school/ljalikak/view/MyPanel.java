@@ -1,7 +1,7 @@
 package ru.zl.school.ljalikak.view;
 
-import ru.zl.school.ljalikak.Place;
-import ru.zl.school.ljalikak.Types;
+import ru.zl.school.ljalikak.model.Place;
+import ru.zl.school.ljalikak.model.Types;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

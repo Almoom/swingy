@@ -1,6 +1,6 @@
 package ru.zl.school.ljalikak.view.elems;
 
-import ru.zl.school.ljalikak.Race;
+import ru.zl.school.ljalikak.model.Race;
 
 import javax.swing.*;
 import java.awt.*;

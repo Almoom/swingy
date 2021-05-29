@@ -1,7 +1,5 @@
 package ru.zl.school.ljalikak.model;
 
-import ru.zl.school.ljalikak.Person;
-
 import java.sql.SQLException;
 
 public interface IDAO {

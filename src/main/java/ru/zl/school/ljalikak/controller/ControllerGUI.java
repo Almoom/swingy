@@ -1,11 +1,10 @@
 package ru.zl.school.ljalikak.controller;
 
-import ru.zl.school.ljalikak.Person;
-import ru.zl.school.ljalikak.Place;
+import ru.zl.school.ljalikak.model.Person;
+import ru.zl.school.ljalikak.model.Place;
 import ru.zl.school.ljalikak.model.DAOh2;
 import ru.zl.school.ljalikak.model.Level;
 import ru.zl.school.ljalikak.view.MyFrame;
-import ru.zl.school.ljalikak.view.Warrior;
 
 import java.awt.*;
 import java.io.IOException;
@@ -15,6 +14,7 @@ public class ControllerGUI implements IController {
     MyFrame f;
     private Level level;
     private Place[][] env;
+    private Person person;
 
     public ControllerGUI() throws IOException {
         f = new MyFrame(this);
@@ -46,7 +46,7 @@ public class ControllerGUI implements IController {
 
     @Override
     public void findPersonAndStartGame(String login) {
-        Person person = daoH2.read(login);
+        person = daoH2.read(login);
         if (person == null) return;
         startGame(person);
     }
@@ -64,10 +64,10 @@ public class ControllerGUI implements IController {
         }
     }
 
-
     @Override
     public void exit() {
-
+        daoH2.closeDB();
+        System.exit(0);
     }
 
     @Override
@@ -81,9 +81,12 @@ public class ControllerGUI implements IController {
             case MOVE_DOWN: tryMovePlayer(Level.DOWN); break;
             case MOVE_LEFT: tryMovePlayer(Level.LEFT); break;
             case MOVE_RIGHT: tryMovePlayer(Level.RIGHT); break;
-            case EXIT: exit(); break;
             default:
                 break;
         }
+    }
+
+    public Person getPerson() {
+        return person;
     }
 }

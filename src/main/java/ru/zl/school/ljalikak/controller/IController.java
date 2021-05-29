@@ -1,7 +1,6 @@
 package ru.zl.school.ljalikak.controller;
 
-import ru.zl.school.ljalikak.Person;
-import ru.zl.school.ljalikak.Place;
+import ru.zl.school.ljalikak.model.Person;
 
 import java.awt.*;
 
@@ -13,5 +12,4 @@ public interface IController {
     public void exit();
     public void closeViews();
 
-//    public void exit(String message);
 }

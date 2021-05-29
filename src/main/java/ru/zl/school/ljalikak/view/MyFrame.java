@@ -1,7 +1,7 @@
 package ru.zl.school.ljalikak.view;
 
-import ru.zl.school.ljalikak.Person;
-import ru.zl.school.ljalikak.Race;
+import ru.zl.school.ljalikak.model.Person;
+import ru.zl.school.ljalikak.model.Race;
 import ru.zl.school.ljalikak.controller.Actions;
 import ru.zl.school.ljalikak.controller.ControllerGUI;
 import ru.zl.school.ljalikak.view.elems.*;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ru.zl.school.ljalikak.Person.*;
+import static ru.zl.school.ljalikak.model.Person.*;
 
 public class MyFrame extends JFrame {
     ControllerGUI controllerFrame;
@@ -81,7 +81,6 @@ public class MyFrame extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-//                System.out.println(e.getKeyChar());
                 Actions action = Actions.getAction(e.getKeyChar());
                 try {
                     controllerFrame.executeCommand(action);
@@ -90,7 +89,7 @@ public class MyFrame extends JFrame {
                             "Player is dead!!!",
                             "Game Over",
                             JOptionPane.PLAIN_MESSAGE);
-//                    repainForGame(null);
+                    controllerFrame.exit();
                 }
                 refresh(person);
             }
@@ -167,6 +166,7 @@ public class MyFrame extends JFrame {
                     printMsg("Введите логин");
                 } else {
                     controllerFrame.findPersonAndStartGame(tlogin.getText());
+                    person = controllerFrame.getPerson();
                 }
             } catch (RuntimeException ex) {
                 ex.printStackTrace();
@@ -258,7 +258,7 @@ public class MyFrame extends JFrame {
 
         controllerFrame.refresh();
 
-//        Warrior person = model.getPlayer();
+//        person = model.getPlayer();
         updateField(NAME, person.getLogin());
         updateField(HP, Integer.toString(person.getHitPoints()));
         updateField(LEVEL, Integer.toString(person.getLevel()));

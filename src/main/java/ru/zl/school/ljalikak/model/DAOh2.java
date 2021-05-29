@@ -1,8 +1,5 @@
 package ru.zl.school.ljalikak.model;
 
-import ru.zl.school.ljalikak.Person;
-import ru.zl.school.ljalikak.Race;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -148,4 +145,13 @@ public class DAOh2 implements IDAO {
         }
     }
 
+    public void closeDB() {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

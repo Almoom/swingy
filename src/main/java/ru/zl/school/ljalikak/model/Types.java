@@ -1,4 +1,4 @@
-package ru.zl.school.ljalikak;
+package ru.zl.school.ljalikak.model;
 
 public enum Types {
     EMPTY,

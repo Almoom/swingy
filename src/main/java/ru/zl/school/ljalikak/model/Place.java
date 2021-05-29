@@ -1,4 +1,4 @@
-package ru.zl.school.ljalikak;
+package ru.zl.school.ljalikak.model;
 
 import ru.zl.school.ljalikak.view.PlaceHolder;
 

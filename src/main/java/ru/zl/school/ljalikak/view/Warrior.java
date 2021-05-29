@@ -1,7 +1,7 @@
 package ru.zl.school.ljalikak.view;
 
 
-import ru.zl.school.ljalikak.Types;
+import ru.zl.school.ljalikak.model.Types;
 
 import java.util.Random;
 
