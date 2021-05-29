@@ -11,7 +11,7 @@ public class Warrior extends PlaceHolder{
     public static final String HP = "hp";
     public static final String ATTACK = "attack";
     public static final String DEFENSE = "defense";
-    public static final String HELMET = "helmet";
+    public static final String HIT_POINTS = "hit_points";
     public static final String LEVEL = "level";
     public static final String EXP = "exp";
     public static final String TYPE = "type";

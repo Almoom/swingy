@@ -4,6 +4,7 @@ import ru.zl.school.ljalikak.Person;
 import ru.zl.school.ljalikak.Race;
 import ru.zl.school.ljalikak.controller.Actions;
 import ru.zl.school.ljalikak.controller.ControllerGUI;
+import ru.zl.school.ljalikak.view.elems.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,15 +15,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ru.zl.school.ljalikak.view.Warrior.*;
+import static ru.zl.school.ljalikak.Person.*;
 
 public class MyFrame extends JFrame {
     ControllerGUI controllerFrame;
+    private Person person;
     private MyPanel gamePanel;
     private JPanel textPanel;
     private KeyListener listener;
     private Map<String, JLabel> labels;
-    private static final String[] LABELS = {NAME, HP, LEVEL, EXP, "next exp", ATTACK, DEFENSE, HELMET};
+    private static final String[] LABELS = {NAME, HP, LEVEL, EXP, ATTACK, DEFENSE, HIT_POINTS};
     private static final int HELLO_PANEL_HEIGHT = 352;
     private static final int HELLO_PANEL_WIDTH = 490;
     private static final int GAME_PANEL_WIDTH = 330;
@@ -79,7 +81,7 @@ public class MyFrame extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                System.out.println(e.getKeyChar());
+//                System.out.println(e.getKeyChar());
                 Actions action = Actions.getAction(e.getKeyChar());
                 try {
                     controllerFrame.executeCommand(action);
@@ -88,9 +90,9 @@ public class MyFrame extends JFrame {
                             "Player is dead!!!",
                             "Game Over",
                             JOptionPane.PLAIN_MESSAGE);
-                    repainForGame(null);
+//                    repainForGame(null);
                 }
-                refresh(null);
+                refresh(person);
             }
 
             @Override
@@ -178,6 +180,7 @@ public class MyFrame extends JFrame {
 
     public void startNew(Person person) {
         try {
+            this.person = person;
             if (tlogin.getText().isEmpty()) {
                 printMsg("Введите логин");
             } else {
@@ -256,16 +259,19 @@ public class MyFrame extends JFrame {
         controllerFrame.refresh();
 
 //        Warrior person = model.getPlayer();
-//        updateField(NAME, person.getName());
-//        updateField(HP, Integer.toString(person.getHp()));
-//        updateField(LEVEL, Integer.toString(person.getLevel()));
-//        updateField(EXP, Integer.toString(person.getExperience()));
-//        updateField("next exp", Integer.toString(person.expNextLevel));
-//        updateField(DEFENSE, Integer.toString(person.getDefence()));
-//        updateField(HELMET, Integer.toString(person.getHelmet()));
-//        updateField(ATTACK, Integer.toString(person.getAttack()));
+        updateField(NAME, person.getLogin());
+        updateField(HP, Integer.toString(person.getHitPoints()));
+        updateField(LEVEL, Integer.toString(person.getLevel()));
+        updateField(EXP, person.getExperience() + "/" + person.getExpNextLevel());
+        updateField(DEFENSE, Integer.toString(person.getDefense()));
+        updateField(HIT_POINTS, Integer.toString(person.getHitPoints()));
+        updateField(ATTACK, Integer.toString(person.getAttack()));
 //        updateField("logger", "<html>".concat(person.getLog().replace("\n", "<br>").concat("</html>")));
 
         repaint();
+    }
+
+    public void updateField(String name, String value) {
+        labels.get(name).setText(value);
     }
 }

@@ -6,6 +6,15 @@ import javax.swing.*;
 import java.io.Serializable;
 
 public class Person extends PlaceHolder implements Serializable {
+    public static final String NAME = "name";
+    public static final String HP = "hp";
+    public static final String ATTACK = "attack";
+    public static final String DEFENSE = "defense";
+    public static final String HIT_POINTS = "hit_points";
+    public static final String LEVEL = "level";
+    public static final String EXP = "exp";
+    public static final String TYPE = "type";
+
     private String login;
     private Race race;
     private int level;
@@ -13,6 +22,19 @@ public class Person extends PlaceHolder implements Serializable {
     private int attack;
     private int defense;
     private int hitPoints;
+    private int expNextLevel;
+
+    public void setHitPoints(int hitPoints) {
+        this.hitPoints = hitPoints;
+    }
+
+    public int getExpNextLevel() {
+        return expNextLevel;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
 
     public Person(String login, Race race) {
         super(Types.PlAYER);
@@ -29,10 +51,11 @@ public class Person extends PlaceHolder implements Serializable {
                 this.level = 10;
             } break;
         }
-        this.experience = lvlCalc(level - 1);
-        this.attack = level * 2;
-        this.defense = level * 2;
-        this.hitPoints = level * 2;
+        this.experience = 0;
+        this.attack = level;
+        this.defense = level;
+        this.hitPoints = 10 + level;
+        setLevel(level);
     }
 
     public Person(String login, Race race, int level, int experience, int attack, int defense, int hitPoints) {
@@ -74,6 +97,12 @@ public class Person extends PlaceHolder implements Serializable {
         return hitPoints;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+        expCalc();
+
+    }
+
     @Override
     public String toString() {
         return login + '\t' + race + '\t'
@@ -81,7 +110,7 @@ public class Person extends PlaceHolder implements Serializable {
                 + defense + '\t' + hitPoints;
     }
 
-    private int lvlCalc(int level) {
-        return level * 1000 + (level - 1) * (level - 1) * 450;
+    private void expCalc() {
+        expNextLevel = level * 1000 + (int)Math.pow(level - 1, 2) * 450;
     }
 }

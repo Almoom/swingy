@@ -26,7 +26,11 @@ public class ControllerGUI implements IController {
 
     @Override
     public void tryMovePlayer(Point shift) {
-        level.tryMovePerson(shift);
+        if (level.isLeaveLevel(shift)) {
+            level = new Level(level.getPlayer());
+        } else {
+            level.tryMovePerson(shift);
+        }
     }
 
     @Override

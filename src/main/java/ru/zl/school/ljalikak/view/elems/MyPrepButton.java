@@ -1,4 +1,4 @@
-package ru.zl.school.ljalikak.view;
+package ru.zl.school.ljalikak.view.elems;
 
 import ru.zl.school.ljalikak.Person;
 

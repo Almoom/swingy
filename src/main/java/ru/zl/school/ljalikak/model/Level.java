@@ -2,6 +2,7 @@ package ru.zl.school.ljalikak.model;
 
 import ru.zl.school.ljalikak.Person;
 import ru.zl.school.ljalikak.Place;
+import ru.zl.school.ljalikak.Race;
 import ru.zl.school.ljalikak.Types;
 import ru.zl.school.ljalikak.view.PlaceHolder;
 import ru.zl.school.ljalikak.view.Warrior;
@@ -30,6 +31,7 @@ public class Level {
     private Place[][] map;
     private List<Warrior> animals;
     private Person player;
+    public Person enemy;
 
     private Random random;
 
@@ -45,12 +47,6 @@ public class Level {
         initMap();
         player.setXY(size/2,size/2);
         setPlayer(player);
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                System.out.print(map[i][j].getType() + " ");
-            }
-            System.out.println();
-        }
 
         logger = new StringBuilder("");
     }
@@ -127,25 +123,25 @@ public class Level {
         }
     }
 
-    public boolean isLeaveLevel(Warrior object, Point shift) {
-        return getPlaceHolder(object.getX() + shift.x, object.getY() + shift.y) == BOUNDARY;
+    public boolean isLeaveLevel(Point shift) {
+        return getPlaceHolder(player.getX() + shift.x, player.getY() + shift.y) == BOUNDARY;
     }
 
-    public void tryMoveObject(Warrior warrior, Point shift)  {
-        PlaceHolder current = getPlaceHolder(warrior.getX() + shift.x, warrior.getY() + shift.y);
-        if (current == EMPTY) {
-            Point pos = warrior.getPos();
-            insertOnMap(EMPTY, pos.x, pos.y);
-            pos.translate(shift.x, shift.y);
-            insertOnMap(warrior);
-        } else if (current instanceof Warrior) {
-            Warrior enemy = (Warrior) current;
-            insertOnMap(EMPTY, warrior.getX(), warrior.getY());
-            Warrior winner = warrior.fight(enemy);
-            insertOnMap(winner, enemy.getX(), enemy.getY());
-            getPlace(winner.getX(), winner.getY()).setType(Types.BLOOD);
-        }
-    }
+//    public void tryMoveObject(Warrior warrior, Point shift)  {
+//        PlaceHolder current = getPlaceHolder(warrior.getX() + shift.x, warrior.getY() + shift.y);
+//        if (current == EMPTY) {
+//            Point pos = warrior.getPos();
+//            insertOnMap(EMPTY, pos.x, pos.y);
+//            pos.translate(shift.x, shift.y);
+//            insertOnMap(warrior);
+//        } else if (current instanceof Warrior) {
+//            Warrior enemy = (Warrior) current;
+//            insertOnMap(EMPTY, warrior.getX(), warrior.getY());
+//            Warrior winner = warrior.fight(enemy);
+//            insertOnMap(winner, enemy.getX(), enemy.getY());
+//            getPlace(winner.getX(), winner.getY()).setType(Types.BLOOD);
+//        }
+//    }
 
     public void tryMovePerson(Point shift) {
         Place place = getPlace(shift.x + player.getX(), shift.y + player.getY());
@@ -153,25 +149,98 @@ public class Level {
             insertOnMap(EMPTY, player.getX(), player.getY());
             player.setXY(shift.x + player.getX(), shift.y + player.getY());
             insertOnMap(player);
+        } else if (place.getObject().getTypes() == Types.ANIMAL) {
+            enemy = new Person("rat", Race.HUMAN, 1, 1, 1, 1, 5);
+            enemy.setXY(shift.x + player.getX(), shift.y + player.getY());
+            fight();
+//                insertOnMap(EMPTY, player.getX(), player.getY());
+//                insertOnMap(player);
+//                getPlace(winner.getX(), winner.getY()).setType(Types.BLOOD);
+
+//            Warrior enemy = (Warrior) current;
+//            insertOnMap(EMPTY, warrior.getX(), warrior.getY());
+//            Warrior winner = warrior.fight(enemy);
+//            insertOnMap(winner, enemy.getX(), enemy.getY());
+//            getPlace(winner.getX(), winner.getY()).setType(Types.BLOOD);
         }
     }
 
-    public void moveAnimals() {
-        for (Warrior animal : animals) {
-            if (!animal.isAlive())
-                continue;
-            switch (random.nextInt(5)) {
-                case 0 : tryMoveObject(animal, UP); break;
-                case 1 : tryMoveObject(animal, DOWN); break;
-                case 2 : tryMoveObject(animal, LEFT); break;
-                case 3 : tryMoveObject(animal, RIGHT); break;
-                default:
-                    break;
+    public void fight() {
+//        enemyLogger = enemy.logger;
+//        enemy.enemyLogger = logger;
+//        clearLogger();
+        while (isAlive(player) && isAlive(enemy)) {
+            attack(true);
+            if (isAlive(enemy))
+                attack(false);
+        }
+
+        if (isAlive(player)) {
+//            log(name, " kill ", enemy.getName(), "!!!\n");
+            player.setExperience(player.getExperience() + enemy.getExperience());
+//            winner = this;
+            insertOnMap(EMPTY, player.getX(), player.getY());
+//            Warrior winner = warrior.fight(enemy);
+            player.setXY(enemy.getX(), enemy.getY());
+            insertOnMap(player, enemy.getX(), enemy.getY());
+
+//            insertOnMap(player);
+//            getPlace(player.getX(), player.getY()).setType(Types.BLOOD);
+        } /*else {
+//            log(enemy.getName(), " kill ", name, "!!!\n");
+            enemy.addExperience(getExperience());
+            winner = enemy;
+        }*/
+//        enemy.enemyLogger = null;
+//        enemyLogger = null;
+    }
+
+    public int attack(int attack) {
+        return (random.nextInt(attack + 2));
+    }
+
+    private void attack(boolean im) {
+        if (im) {
+            int damage = attack(player.getAttack());
+
+//        log(name, " attack ", enemy.getName(), "\n");
+//        log("(hp=", String.valueOf(enemy.getHp()), " - ( ", String.valueOf(damage), " - ", String.valueOf(enemy.getDefence()), " ) = ");
+
+            damage -= enemy.getDefense();
+            System.out.println("you att = " + damage);
+            if (damage > 0) {
+                enemy.setHitPoints(enemy.getHitPoints() - damage);
+                System.out.println("en hp = " + enemy.getHitPoints());
+            }
+
+//        log( String.valueOf(enemy.getHp()), ")\n");
+        } else {
+            int damage = attack(enemy.getAttack());
+
+//        log(name, " attack ", enemy.getName(), "\n");
+//        log("(hp=", String.valueOf(enemy.getHp()), " - ( ", String.valueOf(damage), " - ", String.valueOf(enemy.getDefence()), " ) = ");
+
+            damage -= player.getDefense();
+            System.out.println("en att = " + damage);
+            if (damage > 0) {
+                player.setHitPoints(player.getHitPoints() - damage);
+                System.out.println("you hp = " + player.getHitPoints());
             }
         }
-        for (int i = animals.size(); i > 0 ; i--) {
-            if (!animals.get(i - 1).isAlive())
-                animals.remove(i - 1);
-        }
+
+    }
+
+
+    public boolean isAlive(Person person) {
+        return (person.getHitPoints() > 0);
+    }
+
+    public Person getPlayer() {
+        return player;
+    }
+
+    public boolean check(Point shift) {
+
+        return true;
     }
 }
