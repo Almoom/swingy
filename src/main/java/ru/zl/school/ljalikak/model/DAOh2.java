@@ -33,12 +33,12 @@ public class DAOh2 implements IDAO {
     
     private DAOh2() throws SQLException, ClassNotFoundException {
         createConnection();
-        dropTable();
-        createTable();
+//        dropTable();
+//        createTable();
 
-        write(new Person("name1", Race.HUMAN));
-        write(new Person("name2", Race.MUTANT));
-        write(new Person("name3", Race.GHOUL));
+//        write(new Person("name1", Race.HUMAN));
+//        write(new Person("name2", Race.MUTANT));
+//        write(new Person("name3", Race.GHOUL));
 
 //        update(new Person("name3", "1111", Race.GHOUL, 100, 100, 100, 100, 100));
     }

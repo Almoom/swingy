@@ -2,6 +2,7 @@ package ru.zl.school.ljalikak.model;
 
 import ru.zl.school.ljalikak.view.PlaceHolder;
 
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.Random;
 
@@ -10,10 +11,8 @@ public class Person extends PlaceHolder implements Serializable {
     public static final String HP = "hp";
     public static final String ATTACK = "attack";
     public static final String DEFENSE = "defense";
-    public static final String HIT_POINTS = "hit_points";
     public static final String LEVEL = "level";
     public static final String EXP = "exp";
-    public static final String TYPE = "type";
 
     private String login;
     private Race race;
@@ -24,6 +23,7 @@ public class Person extends PlaceHolder implements Serializable {
     private int hitPoints;
     private int expNextLevel;
     private Person enemy;
+    private Random random = new Random();
 
     public void setHitPoints(int hitPoints) {
         this.hitPoints = hitPoints;
@@ -56,14 +56,12 @@ public class Person extends PlaceHolder implements Serializable {
             } break;
         }
         this.experience = 0;
-        this.attack = level;
-        this.defense = level;
-        this.hitPoints = 10 + level;
         setLevel(level);
     }
 
     public Person(String login, Race race, int level, int experience, int attack, int defense, int hitPoints) {
         super(Types.PlAYER);
+        setLevel(level);
         this.login = login;
         this.race = race;
         this.level = level;
@@ -71,15 +69,19 @@ public class Person extends PlaceHolder implements Serializable {
         this.attack = attack;
         this.defense = defense;
         this.hitPoints = hitPoints;
-        setLevel(level);
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+        this.attack = Math.max(this.attack, level);
+        this.defense = Math.max(this.defense, level);
+        this.hitPoints = Math.max(this.hitPoints, 2 * level + 5);
+        expCalc();
+
     }
 
     public String getLogin() {
         return login;
-    }
-
-    public Race getRace() {
-        return race;
     }
 
     public int getLevel() {
@@ -102,17 +104,8 @@ public class Person extends PlaceHolder implements Serializable {
         return hitPoints;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
-        expCalc();
-
-    }
-
     public void fight(Person person) {
         this.enemy = person;
-//        enemyLogger = enemy.logger;
-//        enemy.enemyLogger = logger;
-//        clearLogger();
         while (isAlive(this) && isAlive(enemy)) {
             attack(true);
             if (isAlive(enemy))
@@ -120,24 +113,25 @@ public class Person extends PlaceHolder implements Serializable {
         }
 
         if (isAlive(this)) {
-//            log(name, " kill ", enemy.getName(), "!!!\n");
             this.setExperience(this.getExperience() + enemy.getExperience());
-//            winner = this;
-//            insertOnMap(EMPTY, this.getX(), this.getY());
-////            Warrior winner = warrior.fight(enemy);
-//            this.setXY(enemy.getX(), enemy.getY());
-//            insertOnMap(this, enemy.getX(), enemy.getY());
-
-//            insertOnMap(player);
-//            getPlace(player.getX(), player.getY()).setType(Types.BLOOD);
+            int artefact = random.nextInt(10);
+            switch (artefact) {
+                case 0:
+                    this.attack += 1;
+                    print("атаку");
+                    break;
+                case 1:
+                    this.defense += 1;
+                    print("защиту");
+                    break;
+                case 3:
+                    this.hitPoints += 1;
+                    print("жизненную силу");
+                    break;
+            }
         } else {
-            throw new DeadException("dgh");
-//            log(enemy.getName(), " kill ", name, "!!!\n");
-//            enemy.addExperience(getExperience());
-//            winner = enemy;
+            throw new DeadException("sghsgfh");
         }
-//        enemy.enemyLogger = null;
-//        enemyLogger = null;
     }
 
     public int attack(int attack) {
@@ -149,22 +143,14 @@ public class Person extends PlaceHolder implements Serializable {
         if (im) {
             int damage = attack(this.getAttack());
 
-//        log(name, " attack ", enemy.getName(), "\n");
-//        log("(hp=", String.valueOf(enemy.getHp()), " - ( ", String.valueOf(damage), " - ", String.valueOf(enemy.getDefence()), " ) = ");
-
             damage -= enemy.getDefense();
             System.out.println("you att = " + damage);
             if (damage > 0) {
                 enemy.setHitPoints(enemy.getHitPoints() - damage);
                 System.out.println("en hp = " + enemy.getHitPoints());
             }
-
-//        log( String.valueOf(enemy.getHp()), ")\n");
         } else {
             int damage = attack(enemy.getAttack());
-
-//        log(name, " attack ", enemy.getName(), "\n");
-//        log("(hp=", String.valueOf(enemy.getHp()), " - ( ", String.valueOf(damage), " - ", String.valueOf(enemy.getDefence()), " ) = ");
 
             damage -= this.getDefense();
             System.out.println("en att = " + damage);
@@ -175,7 +161,6 @@ public class Person extends PlaceHolder implements Serializable {
         }
 
     }
-
 
     public boolean isAlive(Person person) {
         return (person.getHitPoints() > 0);
@@ -190,5 +175,12 @@ public class Person extends PlaceHolder implements Serializable {
 
     private void expCalc() {
         expNextLevel = level * 1000 + (int)Math.pow(level - 1, 2) * 450;
+    }
+
+    public void print(String msg) {
+        JOptionPane.showMessageDialog(null,
+                "Вы получили артефакт, повышающий вашу " + msg + " на 1!",
+                "Artefact!",
+                JOptionPane.PLAIN_MESSAGE);
     }
 }

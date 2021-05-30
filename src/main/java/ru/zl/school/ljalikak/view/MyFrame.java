@@ -24,7 +24,7 @@ public class MyFrame extends JFrame {
     private JPanel textPanel;
     private KeyListener listener;
     private Map<String, JLabel> labels;
-    private static final String[] LABELS = {NAME, HP, LEVEL, EXP, ATTACK, DEFENSE, HIT_POINTS};
+    private static final String[] LABELS = {NAME, HP, LEVEL, EXP, ATTACK, DEFENSE};
     private static final int HELLO_PANEL_HEIGHT = 352;
     private static final int HELLO_PANEL_WIDTH = 490;
     private static final int GAME_PANEL_WIDTH = 330;
@@ -234,39 +234,19 @@ public class MyFrame extends JFrame {
             y += TEXT_STEP_Y;
         }
 
-//        JLabel label = new JLabel("logger");
-//        label.setPreferredSize(new Dimension( TEXT_PANEL_WIDTH - 40,2000));
-//
-//        JScrollPane scrollFrame = new JScrollPane();
-//        label.setAutoscrolls(true);
-//        scrollFrame.add(label);
-//        scrollFrame.setPreferredSize(new Dimension( TEXT_PANEL_WIDTH - 40,100));
-//        scrollFrame.setBounds(10, y, TEXT_PANEL_WIDTH - 50, 300);
-//        panel.add(scrollFrame);
-
-//        label.setBounds(20, y, TEXT_PANEL_WIDTH - 40, 300);
-//        label.setVerticalAlignment(SwingConstants.TOP);
-//        panel.add(label);
-//        labels.put("logger", label);
-
         return  panel;
     }
 
     public void refresh(Person person) {
 
-//        controllerFrame.fillEnvironment(person);
-
         controllerFrame.refresh();
 
-//        person = model.getPlayer();
         updateField(NAME, person.getLogin());
         updateField(HP, Integer.toString(person.getHitPoints()));
         updateField(LEVEL, Integer.toString(person.getLevel()));
         updateField(EXP, person.getExperience() + "/" + person.getExpNextLevel());
         updateField(DEFENSE, Integer.toString(person.getDefense()));
-        updateField(HIT_POINTS, Integer.toString(person.getHitPoints()));
         updateField(ATTACK, Integer.toString(person.getAttack()));
-//        updateField("logger", "<html>".concat(person.getLog().replace("\n", "<br>").concat("</html>")));
 
         repaint();
     }

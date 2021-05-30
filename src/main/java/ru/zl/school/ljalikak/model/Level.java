@@ -1,11 +1,9 @@
 package ru.zl.school.ljalikak.model;
 
 import ru.zl.school.ljalikak.view.PlaceHolder;
-import ru.zl.school.ljalikak.view.Warrior;
 
+import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Level {
@@ -23,14 +21,10 @@ public class Level {
     private int level;
 
     private Place[][] map;
-    private List<Warrior> animals;
     private Person player;
     public Person enemy;
 
-    private Random random;
-
-    private StringBuilder logger;
-    private boolean loggerOn;
+    private Random random = new Random();
 
     public Level(Person player) {
         level = player.getLevel();
@@ -43,8 +37,6 @@ public class Level {
         this.player = player;
 
         insertOnMap(player);
-
-        logger = new StringBuilder("");
     }
 
     private int getSize(int level) {
@@ -52,10 +44,6 @@ public class Level {
     }
 
     public void initMap() {
-        random = new Random();
-        animals = new ArrayList<>();
-//        map = new Place[SIZE][SIZE];
-
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 map[i][j] = new Place(EMPTY);
@@ -63,8 +51,7 @@ public class Level {
                     continue;
                 int tmp = random.nextInt(100);
                 if (tmp < 4) {
-                    animals.add(new Warrior("Salamander", Types.ANIMAL, j, i, level));
-                    insertOnMap(animals.get(animals.size() - 1));
+                    insertOnMap(new PlaceHolder(Types.ANIMAL, j, i));
                 } else if (tmp < 7) {
                     insertOnMap(new PlaceHolder(Types.STONE, j, i));
                 } else if (tmp < 10) {
@@ -124,7 +111,7 @@ public class Level {
             insertOnMap(EMPTY, player.getX(), player.getY());
             player.setXY(shift.x + player.getX(), shift.y + player.getY());
             insertOnMap(player);
-        } else if (place.getObject().getTypes() == Types.ANIMAL) {
+        } else if (place.getObject().getTypes() == Types.ANIMAL && consent()) {
             enemy = new Person("rat", Race.HUMAN, 1, 300, 1, 1, 5);
             enemy.setXY(shift.x + player.getX(), shift.y + player.getY());
             player.fight(enemy);
@@ -132,6 +119,16 @@ public class Level {
             player.setXY(enemy.getX(), enemy.getY());
             insertOnMap(player, enemy.getX(), enemy.getY());
         }
+    }
+
+    private boolean consent() {
+        if (JOptionPane.showConfirmDialog(null,
+                "Желаете вступить в бой?",
+                "Attention!",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+            return random.nextBoolean();
+        }
+        return true;
     }
 
     public Person getPlayer() {

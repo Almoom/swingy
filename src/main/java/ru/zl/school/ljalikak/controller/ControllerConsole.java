@@ -19,11 +19,6 @@ public class ControllerConsole implements IController {
     }
 
     @Override
-    public void printMessage(String message) {
-
-    }
-
-    @Override
     public void createNewPersonAndStartGame(Person person) {
         daoH2.write(person);
     }
@@ -38,8 +33,4 @@ public class ControllerConsole implements IController {
 
     }
 
-    @Override
-    public void closeViews() {
-
-    }
 }

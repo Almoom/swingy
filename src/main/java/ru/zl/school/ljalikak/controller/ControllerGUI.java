@@ -27,6 +27,8 @@ public class ControllerGUI implements IController {
     @Override
     public void tryMovePlayer(Point shift) {
         if (level.isLeaveLevel(shift)) {
+            person = level.getPlayer();
+            daoH2.update(person);
             level = new Level(level.getPlayer());
         } else {
             level.tryMovePerson(shift);
@@ -34,24 +36,20 @@ public class ControllerGUI implements IController {
     }
 
     @Override
-    public void printMessage(String message) {
-
-    }
-
-    @Override
     public void createNewPersonAndStartGame(Person person) {
+        this.person = person;
         daoH2.write(person);
-        startGame(person);
+        startGame();
     }
 
     @Override
     public void findPersonAndStartGame(String login) {
         person = daoH2.read(login);
         if (person == null) return;
-        startGame(person);
+        startGame();
     }
 
-    private void startGame(Person person) {
+    private void startGame() {
         f.repainForGame(person);
         level = new Level(person);
         refresh();
@@ -68,11 +66,6 @@ public class ControllerGUI implements IController {
     public void exit() {
         daoH2.closeDB();
         System.exit(0);
-    }
-
-    @Override
-    public void closeViews() {
-
     }
 
     public void executeCommand(Actions action) {
