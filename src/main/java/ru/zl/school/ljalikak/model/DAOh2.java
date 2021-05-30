@@ -2,10 +2,15 @@ package ru.zl.school.ljalikak.model;
 
 import ru.zl.school.ljalikak.view.StartException;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.sql.*;
+import java.util.Set;
 
 public class DAOh2 implements IDAO {
     private static DAOh2 daOh2;
@@ -72,6 +77,7 @@ public class DAOh2 implements IDAO {
     @Override
     public boolean write(Person person) {
         try (PreparedStatement pstmt = connection.prepareStatement(WRITE_PERSON)) {
+            validate(person);
             if (checkLogin(person.getLogin())) return false;
             pstmt.setString(1, person.getLogin());
             pstmt.setObject(2, person);
@@ -125,6 +131,7 @@ public class DAOh2 implements IDAO {
 
             ObjectInputStream objectInputStream = new ObjectInputStream(binaryStream);
             object = objectInputStream.readObject();
+
         } catch (SQLException | IOException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
@@ -139,6 +146,19 @@ public class DAOh2 implements IDAO {
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+    }
+
+    public void validate(Person person) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Person>> violations = validator.validate(person);
+        if (!violations.isEmpty()) {
+            StringBuilder log = new StringBuilder();
+            for (ConstraintViolation<Person> errors : violations) {
+                log.append(errors.getMessage()).append("\n");
+            }
+            throw new RuntimeException(log.toString());
         }
     }
 

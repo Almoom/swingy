@@ -3,6 +3,9 @@ package ru.zl.school.ljalikak.model;
 import ru.zl.school.ljalikak.view.DeadException;
 
 import javax.swing.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Random;
 
@@ -14,12 +17,19 @@ public class Person extends PlaceHolder implements Serializable {
     public static final String LEVEL = "level";
     public static final String EXP = "exp";
 
+    @Pattern(regexp = "[0-9a-zA-Z]+")
     private String login;
+    @NotNull(message = "Race cannot be null")
     private Types race;
+    @Min(value = 1, message = "Level should not be less than 1")
     private int level;
+    @Min(value = 0, message = "Level should not be less than 1")
     private int experience;
+    @Min(value = 1, message = "Parameter attack should not be less than 1")
     private int attack;
+    @Min(value = 1, message = "Parameter defense should not be less than 1")
     private int defense;
+    @Min(value = 1, message = "Parameter HP should not be less than 1")
     private int hitPoints;
     private int expNextLevel;
     private Person enemy;

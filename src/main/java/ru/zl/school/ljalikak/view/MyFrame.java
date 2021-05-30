@@ -10,10 +10,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static ru.zl.school.ljalikak.model.Person.*;
 
@@ -56,7 +56,7 @@ public class MyFrame extends JFrame {
     private static Font font;
     static {
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/14262.ttf"))
+            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(MyFrame.class.getResource("/14262.ttf")).openStream())
                     .deriveFont(20f);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
@@ -187,7 +187,10 @@ public class MyFrame extends JFrame {
                 controllerFrame.createNewPersonAndStartGame(person);
             }
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,
+                    ex.getMessage(),
+                    "Game Over",
+                    JOptionPane.PLAIN_MESSAGE);
         }
     }
 

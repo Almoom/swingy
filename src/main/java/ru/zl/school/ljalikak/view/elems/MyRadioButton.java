@@ -1,11 +1,13 @@
 package ru.zl.school.ljalikak.view.elems;
 
 import ru.zl.school.ljalikak.model.Types;
+import ru.zl.school.ljalikak.view.MyFrame;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MyRadioButton extends JRadioButton {
     private static final Color color = new Color(20, 240, 116);
@@ -13,7 +15,7 @@ public class MyRadioButton extends JRadioButton {
     private static Font font;
     static {
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/14262.ttf"))
+            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(MyFrame.class.getResource("/14262.ttf")).openStream())
                     .deriveFont(15f);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
