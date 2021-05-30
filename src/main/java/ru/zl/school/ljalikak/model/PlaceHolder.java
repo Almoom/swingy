@@ -1,4 +1,4 @@
-package ru.zl.school.ljalikak.view;
+package ru.zl.school.ljalikak.model;
 
 import ru.zl.school.ljalikak.model.Types;
 
@@ -6,8 +6,8 @@ import java.awt.*;
 import java.io.Serializable;
 
 public class PlaceHolder implements Serializable {
-    protected Types type;
-    protected Point pos;
+    public Types type;
+    public Point pos;
 
     public PlaceHolder(Types type) {
         this.type = type;

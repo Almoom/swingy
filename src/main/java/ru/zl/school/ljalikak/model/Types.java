@@ -4,15 +4,16 @@ public enum Types {
     EMPTY,
     BOUNDARY,
 
+    HUMAN,
+    MUTANT,
+    GHOUL,
+
     STONE,
     TREE,
 
-    PlAYER,
+    PLAYER,
     ANIMAL,
 
-    BLOOD,
-    WATER,
     GREEN,
-    EARTH,
     BLACK
 }

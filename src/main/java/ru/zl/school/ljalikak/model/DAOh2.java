@@ -1,6 +1,7 @@
 package ru.zl.school.ljalikak.model;
 
-import javax.swing.*;
+import ru.zl.school.ljalikak.view.StartException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -35,12 +36,6 @@ public class DAOh2 implements IDAO {
         createConnection();
 //        dropTable();
 //        createTable();
-
-//        write(new Person("name1", Race.HUMAN));
-//        write(new Person("name2", Race.MUTANT));
-//        write(new Person("name3", Race.GHOUL));
-
-//        update(new Person("name3", "1111", Race.GHOUL, 100, 100, 100, 100, 100));
     }
 
     public synchronized void createConnection() {
@@ -75,33 +70,51 @@ public class DAOh2 implements IDAO {
     }
 
     @Override
-    public void write(Person person) {
+    public boolean write(Person person) {
         try (PreparedStatement pstmt = connection.prepareStatement(WRITE_PERSON)) {
-            checkLogin(person.getLogin());
+            if (checkLogin(person.getLogin())) return false;
             pstmt.setString(1, person.getLogin());
             pstmt.setObject(2, person);
             pstmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return true;
     }
 
-    private void checkLogin(String login) {
+    private boolean checkLogin(String login) {
         try (PreparedStatement pstmt = connection.prepareStatement(CHECK_LOGIN_USES)) {
             pstmt.setString(1, login);
             if (pstmt.executeQuery().first()) {
-                throw new RuntimeException("Login is exist!");
+                throw new StartException("Игрока с таким логином уже существует!");
             }
+        } catch (StartException e) {
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return false;
+    }
+
+    private boolean checkExist(String login) throws SQLException {
+        try (PreparedStatement pstmt = connection.prepareStatement(CHECK_EXIST_PERSON)) {
+            pstmt.setString(1, login);
+            if (!pstmt.executeQuery().first()) {
+                throw new StartException("Игрока с таким логином не существует!");
+            }
+        } catch (StartException e) {
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public Person read(String login) {
         Object object = null;
         try (PreparedStatement pstmt = connection.prepareStatement(READ_PERSON)) {
-            if (!checkExist(login)) return null;
+            if (checkExist(login)) return null;
 
             pstmt.setString(1, login);
 
@@ -116,22 +129,6 @@ public class DAOh2 implements IDAO {
             throwables.printStackTrace();
         }
         return (Person) object;
-    }
-
-    private boolean checkExist(String login) throws SQLException {
-        try (PreparedStatement pstmt = connection.prepareStatement(CHECK_EXIST_PERSON)) {
-            pstmt.setString(1, login);
-            if (!pstmt.executeQuery().first()) {
-                JOptionPane.showMessageDialog(null,
-                        "Игрока с таким логином не существует!",
-                        "Please, stand by...",
-                        JOptionPane.PLAIN_MESSAGE);
-                return false;
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return true;
     }
 
     @Override

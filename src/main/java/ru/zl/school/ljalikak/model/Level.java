@@ -1,7 +1,5 @@
 package ru.zl.school.ljalikak.model;
 
-import ru.zl.school.ljalikak.view.PlaceHolder;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
@@ -112,7 +110,7 @@ public class Level {
             player.setXY(shift.x + player.getX(), shift.y + player.getY());
             insertOnMap(player);
         } else if (place.getObject().getTypes() == Types.ANIMAL && consent()) {
-            enemy = new Person("rat", Race.HUMAN, 1, 300, 1, 1, 5);
+            enemy = new Person("rat", Types.HUMAN, 1, 300, 1, 1, 5);
             enemy.setXY(shift.x + player.getX(), shift.y + player.getY());
             player.fight(enemy);
             insertOnMap(EMPTY, player.getX(), player.getY());

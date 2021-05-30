@@ -1,6 +1,6 @@
 package ru.zl.school.ljalikak.model;
 
-import ru.zl.school.ljalikak.view.PlaceHolder;
+import ru.zl.school.ljalikak.view.DeadException;
 
 import javax.swing.*;
 import java.io.Serializable;
@@ -15,7 +15,7 @@ public class Person extends PlaceHolder implements Serializable {
     public static final String EXP = "exp";
 
     private String login;
-    private Race race;
+    private Types race;
     private int level;
     private int experience;
     private int attack;
@@ -40,8 +40,8 @@ public class Person extends PlaceHolder implements Serializable {
         }
     }
 
-    public Person(String login, Race race) {
-        super(Types.PlAYER);
+    public Person(String login, Types race) {
+        super(Types.PLAYER);
         this.login = login;
         this.race = race;
         switch (race) {
@@ -59,8 +59,8 @@ public class Person extends PlaceHolder implements Serializable {
         setLevel(level);
     }
 
-    public Person(String login, Race race, int level, int experience, int attack, int defense, int hitPoints) {
-        super(Types.PlAYER);
+    public Person(String login, Types race, int level, int experience, int attack, int defense, int hitPoints) {
+        super(Types.PLAYER);
         setLevel(level);
         this.login = login;
         this.race = race;
@@ -130,7 +130,7 @@ public class Person extends PlaceHolder implements Serializable {
                     break;
             }
         } else {
-            throw new DeadException("sghsgfh");
+            throw new DeadException();
         }
     }
 
@@ -144,7 +144,7 @@ public class Person extends PlaceHolder implements Serializable {
             int damage = attack(this.getAttack());
 
             damage -= enemy.getDefense();
-            System.out.println("you att = " + damage);
+            System.out.println("you att = " + damage); //todo
             if (damage > 0) {
                 enemy.setHitPoints(enemy.getHitPoints() - damage);
                 System.out.println("en hp = " + enemy.getHitPoints());

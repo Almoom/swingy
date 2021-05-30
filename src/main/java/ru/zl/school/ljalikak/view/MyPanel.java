@@ -1,6 +1,7 @@
 package ru.zl.school.ljalikak.view;
 
 import ru.zl.school.ljalikak.model.Place;
+import ru.zl.school.ljalikak.model.PlaceHolder;
 import ru.zl.school.ljalikak.model.Types;
 
 import javax.imageio.ImageIO;
@@ -47,7 +48,6 @@ public class MyPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Could not load images", "Error", JOptionPane.ERROR_MESSAGE);
             throw ex;
         }
-//        setOpaque(false);
     }
 
     public Place[][] getEnv() {
@@ -59,7 +59,7 @@ public class MyPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-//        g2.drawLine(windowPos.x + 16, windowPos.y + 16, windowPos.x + 16, windowPos.y + 16);
+
         for (int i = 0; i < env.length; i++) {
             for (int j = 0; j < env[0].length; j++) {
                 printPlane(g2, env[i][j], j * CELL_SIZE, i * CELL_SIZE);
@@ -71,20 +71,16 @@ public class MyPanel extends JPanel {
                 System.out.print(env[i][j].getObject().type.toString().substring(0, 3) + " ");
             }
             System.out.println();
-        }
+        } //todo
     }
 
 
     private void printPlane(Graphics2D g2, Place place, int x, int y) {
         int size = 2;
 
-        // в перспективе тут должны быть отмечены свойства земли, на которой расположен объект
         switch (place.getType()) {
-            case BLOOD: g2.setColor(Color.RED); break;
             case GREEN: g2.setColor(GREEN_COLOR); break;
-            case WATER: g2.setColor(Color.blue); break;
             case BLACK: g2.setColor(Color.black); break;
-            case EARTH: g2.setColor(Color.darkGray); break;
             default:
                 g2.setColor(Color.white);
         }
@@ -101,7 +97,7 @@ public class MyPanel extends JPanel {
                 g2.fillRect(x, y, CELL_SIZE, CELL_SIZE);
                 return;
             }
-            case PlAYER: {
+            case PLAYER: {
                 g2.setPaint(player);
                 g2.fillRect(x, y, CELL_SIZE, CELL_SIZE);
                 return;

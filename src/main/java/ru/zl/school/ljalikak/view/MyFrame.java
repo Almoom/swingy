@@ -1,9 +1,9 @@
 package ru.zl.school.ljalikak.view;
 
 import ru.zl.school.ljalikak.model.Person;
-import ru.zl.school.ljalikak.model.Race;
 import ru.zl.school.ljalikak.controller.Actions;
 import ru.zl.school.ljalikak.controller.ControllerGUI;
+import ru.zl.school.ljalikak.model.Types;
 import ru.zl.school.ljalikak.view.elems.*;
 
 import javax.swing.*;
@@ -51,7 +51,7 @@ public class MyFrame extends JFrame {
     private JButton prepMen;
     private JButton prepWomen;
     private JButton prepDog;
-    private Race type = Race.HUMAN;
+    private Types type = Types.HUMAN;
 
     private static Font font;
     static {
@@ -84,7 +84,7 @@ public class MyFrame extends JFrame {
                 Actions action = Actions.getAction(e.getKeyChar());
                 try {
                     controllerFrame.executeCommand(action);
-                } catch (RuntimeException ex) {
+                } catch (DeadException ex) {
                     JOptionPane.showMessageDialog(null,
                             "Player is dead!!!",
                             "Game Over",
@@ -118,18 +118,18 @@ public class MyFrame extends JFrame {
         prepared = new MyLabel("<html>Or use</br> prepared</html>");
         c.add(prepared);
 
-        human = new MyRadioButton(Race.HUMAN.toString().toLowerCase());
-        human.addActionListener(e -> type = Race.valueOf(e.getActionCommand().toUpperCase()));
+        human = new MyRadioButton(Types.HUMAN.toString().toLowerCase());
+        human.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         human.setToolTipText("Начните игру человеком из Мегатонны с уровня 1!");
         c.add(human);
 
-        ghoul = new MyRadioButton(Race.GHOUL.toString().toLowerCase());
-        ghoul.addActionListener(e -> type = Race.valueOf(e.getActionCommand().toUpperCase()));
+        ghoul = new MyRadioButton(Types.GHOUL.toString().toLowerCase());
+        ghoul.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         ghoul.setToolTipText("Начните игру гулем из Некрополиса с уровня 5!");
         c.add(ghoul);
 
-        mutant = new MyRadioButton(Race.MUTANT.toString().toLowerCase());
-        mutant.addActionListener(e -> type = Race.valueOf(e.getActionCommand().toUpperCase()));
+        mutant = new MyRadioButton(Types.MUTANT.toString().toLowerCase());
+        mutant.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         mutant.setToolTipText("Начните игру мутантом из Мирапозы с уровня 10!");
         c.add(mutant);
 
@@ -139,15 +139,15 @@ public class MyFrame extends JFrame {
         racep.add(mutant);
 
         prepMen = new MyPrepButton(MyFrame.class.getResource("/men.png"));
-        prepMen.addActionListener(e -> startNew(new Person(tlogin.getText(), Race.HUMAN, 1, 0, 2, 2, 10)));
+        prepMen.addActionListener(e -> startNew(new Person(tlogin.getText(), Types.HUMAN, 1, 0, 2, 2, 10)));
         prepMen.setToolTipText("Вы мужик 1 уровня, с атакой 2, защитой 2 и 10 жизнями");
 
         prepDog = new MyPrepButton(MyFrame.class.getResource("/dog.png"));
-        prepDog.addActionListener(e -> startNew(new Person(tlogin.getText(), Race.HUMAN, 1, 0, 2, 1, 15)));
+        prepDog.addActionListener(e -> startNew(new Person(tlogin.getText(), Types.HUMAN, 1, 0, 2, 1, 15)));
         prepDog.setToolTipText("Вы пёс 1 уровня, с атакой 2, защитой 1 и 15 жизнями");
 
         prepWomen = new MyPrepButton(MyFrame.class.getResource("/women.png"));
-        prepWomen.addActionListener(e -> startNew(new Person(tlogin.getText(), Race.HUMAN, 1, 0, 1, 2, 15)));
+        prepWomen.addActionListener(e -> startNew(new Person(tlogin.getText(), Types.HUMAN, 1, 0, 1, 2, 15)));
         prepWomen.setToolTipText("Вы женщина 1 уровня, с атакой 1, защитой 2 и 15 жизнями");
 
         c.add(prepMen);

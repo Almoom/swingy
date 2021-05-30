@@ -38,8 +38,7 @@ public class ControllerGUI implements IController {
     @Override
     public void createNewPersonAndStartGame(Person person) {
         this.person = person;
-        daoH2.write(person);
-        startGame();
+        if (daoH2.write(person)) startGame();
     }
 
     @Override
