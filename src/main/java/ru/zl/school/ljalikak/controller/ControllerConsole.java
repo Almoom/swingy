@@ -1,13 +1,18 @@
 package ru.zl.school.ljalikak.controller;
 
+import ru.zl.school.ljalikak.model.Level;
 import ru.zl.school.ljalikak.model.Person;
 import ru.zl.school.ljalikak.model.DAOh2;
+import ru.zl.school.ljalikak.model.Place;
 import ru.zl.school.ljalikak.view.MyRegistrationConsole;
 
 import java.awt.*;
 
 public class ControllerConsole implements IController {
     private static DAOh2 daoH2 = DAOh2.getProvider();
+    private Level level;
+    private Place[][] env;
+    private Person person;
 
     public ControllerConsole() {
         MyRegistrationConsole f = new MyRegistrationConsole(this);
@@ -19,13 +24,19 @@ public class ControllerConsole implements IController {
     }
 
     @Override
-    public void createNewPersonAndStartGame(Person person) {
-        daoH2.write(person);
+    public boolean createNewPersonAndStartGame(Person person) {
+        this.person = person;
+        if (daoH2.write(person, "console")) System.out.println("startGame()");
+        else return false;
+        return true;
     }
 
     @Override
-    public void findPersonAndStartGame(String login) {
-        daoH2.read(login);
+    public boolean findPersonAndStartGame(String login) {
+        person = daoH2.read(login, "console");
+        if (person == null) return false;
+        System.out.println("startGame()");
+        return true;
     }
 
     @Override

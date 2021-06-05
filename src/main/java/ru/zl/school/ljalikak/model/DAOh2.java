@@ -75,10 +75,10 @@ public class DAOh2 implements IDAO {
     }
 
     @Override
-    public boolean write(Person person) {
+    public boolean write(Person person, String mode) {
         try (PreparedStatement pstmt = connection.prepareStatement(WRITE_PERSON)) {
             validate(person);
-            if (checkLogin(person.getLogin())) return false;
+            if (checkLogin(person.getLogin(), mode)) return false;
             pstmt.setString(1, person.getLogin());
             pstmt.setObject(2, person);
             pstmt.executeUpdate();
@@ -88,11 +88,14 @@ public class DAOh2 implements IDAO {
         return true;
     }
 
-    private boolean checkLogin(String login) {
+    private boolean checkLogin(String login, String mode) {
         try (PreparedStatement pstmt = connection.prepareStatement(CHECK_LOGIN_USES)) {
             pstmt.setString(1, login);
-            if (pstmt.executeQuery().first()) {
-                throw new StartException("Игрока с таким логином уже существует!");
+            if (pstmt.executeQuery().first() && mode.equals("gui")) {
+                throw new StartException("Игрок с таким логином уже существует!");
+            } else if (pstmt.executeQuery().first() && mode.equals("console")) {
+                System.out.println("Игрок с таким логином уже существует!");
+                return true;
             }
         } catch (StartException e) {
             return true;
@@ -102,11 +105,14 @@ public class DAOh2 implements IDAO {
         return false;
     }
 
-    private boolean checkExist(String login) throws SQLException {
+    private boolean checkExist(String login, String mode) throws SQLException {
         try (PreparedStatement pstmt = connection.prepareStatement(CHECK_EXIST_PERSON)) {
             pstmt.setString(1, login);
-            if (!pstmt.executeQuery().first()) {
+            if (!pstmt.executeQuery().first() && mode.equals("gui")) {
                 throw new StartException("Игрока с таким логином не существует!");
+            } else if (!pstmt.executeQuery().first() && mode.equals("console")) {
+                System.out.println("Игрока с таким логином не существует!");
+                return true;
             }
         } catch (StartException e) {
             return true;
@@ -117,10 +123,10 @@ public class DAOh2 implements IDAO {
     }
 
     @Override
-    public Person read(String login) {
+    public Person read(String login, String mode) {
         Object object = null;
         try (PreparedStatement pstmt = connection.prepareStatement(READ_PERSON)) {
-            if (checkExist(login)) return null;
+            if (checkExist(login, mode)) return null;
 
             pstmt.setString(1, login);
 

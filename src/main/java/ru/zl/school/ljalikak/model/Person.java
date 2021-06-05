@@ -154,19 +154,19 @@ public class Person extends PlaceHolder implements Serializable {
             int damage = attack(this.getAttack());
 
             damage -= enemy.getDefense();
-            System.out.println("you att = " + damage); //todo
+//            System.out.println("you att = " + damage); //todo
             if (damage > 0) {
                 enemy.setHitPoints(enemy.getHitPoints() - damage);
-                System.out.println("en hp = " + enemy.getHitPoints());
+//                System.out.println("en hp = " + enemy.getHitPoints());
             }
         } else {
             int damage = attack(enemy.getAttack());
 
             damage -= this.getDefense();
-            System.out.println("en att = " + damage);
+//            System.out.println("en att = " + damage);
             if (damage > 0) {
                 this.setHitPoints(this.getHitPoints() - damage);
-                System.out.println("you hp = " + this.getHitPoints());
+//                System.out.println("you hp = " + this.getHitPoints());
             }
         }
 

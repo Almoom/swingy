@@ -6,8 +6,8 @@ import java.awt.*;
 
 public interface IController {
     public void tryMovePlayer(Point shift);
-    public void createNewPersonAndStartGame(Person person);
-    public void findPersonAndStartGame(String login);
+    public boolean createNewPersonAndStartGame(Person person);
+    public boolean findPersonAndStartGame(String login);
     public void exit();
 
 }

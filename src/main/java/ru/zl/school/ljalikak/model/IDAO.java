@@ -4,8 +4,8 @@ import java.sql.SQLException;
 
 public interface IDAO {
     void createConnection();
-    boolean write(Person person) throws SQLException;
-    Person read(String login) throws SQLException;
+    boolean write(Person person, String mode) throws SQLException;
+    Person read(String login, String mode) throws SQLException;
     void update(Person person);
 
 }

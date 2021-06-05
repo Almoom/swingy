@@ -36,16 +36,18 @@ public class ControllerGUI implements IController {
     }
 
     @Override
-    public void createNewPersonAndStartGame(Person person) {
+    public boolean createNewPersonAndStartGame(Person person) {
         this.person = person;
-        if (daoH2.write(person)) startGame();
+        if (daoH2.write(person, "gui")) startGame();
+        return true;
     }
 
     @Override
-    public void findPersonAndStartGame(String login) {
-        person = daoH2.read(login);
-        if (person == null) return;
+    public boolean findPersonAndStartGame(String login) {
+        person = daoH2.read(login, "gui");
+        if (person == null) return false;
         startGame();
+        return true;
     }
 
     private void startGame() {
