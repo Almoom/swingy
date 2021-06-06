@@ -16,6 +16,7 @@ public class Person extends PlaceHolder implements Serializable {
     public static final String DEFENSE = "defense";
     public static final String LEVEL = "level";
     public static final String EXP = "exp";
+    private static final long serialVersionUID = 1113799434508676095L;
 
     @Pattern(regexp = "[0-9a-zA-Z]+")
     private String login;
@@ -114,7 +115,7 @@ public class Person extends PlaceHolder implements Serializable {
         return hitPoints;
     }
 
-    public void fight(Person person) {
+    public void fight(Person person, String mode) {
         this.enemy = person;
         while (isAlive(this) && isAlive(enemy)) {
             attack(true);
@@ -128,15 +129,15 @@ public class Person extends PlaceHolder implements Serializable {
             switch (artefact) {
                 case 0:
                     this.attack += 1;
-                    print("атаку");
+                    print("атаку", mode);
                     break;
                 case 1:
                     this.defense += 1;
-                    print("защиту");
+                    print("защиту", mode);
                     break;
                 case 3:
                     this.hitPoints += 1;
-                    print("жизненную силу");
+                    print("жизненную силу", mode);
                     break;
             }
         } else {
@@ -154,19 +155,19 @@ public class Person extends PlaceHolder implements Serializable {
             int damage = attack(this.getAttack());
 
             damage -= enemy.getDefense();
-//            System.out.println("you att = " + damage); //todo
+            System.out.println("you att = " + damage); //todo
             if (damage > 0) {
                 enemy.setHitPoints(enemy.getHitPoints() - damage);
-//                System.out.println("en hp = " + enemy.getHitPoints());
+                System.out.println("en hp = " + enemy.getHitPoints());
             }
         } else {
             int damage = attack(enemy.getAttack());
 
             damage -= this.getDefense();
-//            System.out.println("en att = " + damage);
+            System.out.println("en att = " + damage);
             if (damage > 0) {
                 this.setHitPoints(this.getHitPoints() - damage);
-//                System.out.println("you hp = " + this.getHitPoints());
+                System.out.println("you hp = " + this.getHitPoints());
             }
         }
 
@@ -187,10 +188,14 @@ public class Person extends PlaceHolder implements Serializable {
         expNextLevel = level * 1000 + (int)Math.pow(level - 1, 2) * 450;
     }
 
-    public void print(String msg) {
-        JOptionPane.showMessageDialog(null,
-                "Вы получили артефакт, повышающий вашу " + msg + " на 1!",
-                "Artefact!",
-                JOptionPane.PLAIN_MESSAGE);
+    public void print(String msg, String mode) {
+        if (mode.equals("gui")) {
+            JOptionPane.showMessageDialog(null,
+                    "Вы получили артефакт, повышающий вашу " + msg + " на 1!",
+                    "Artefact!",
+                    JOptionPane.PLAIN_MESSAGE);
+        } else if (mode.equals("console")) {
+            System.out.println("Вы получили артефакт, повышающий вашу " + msg + " на 1!");
+        }
     }
 }

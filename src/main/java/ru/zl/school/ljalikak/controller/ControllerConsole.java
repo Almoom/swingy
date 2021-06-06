@@ -45,33 +45,18 @@ public class ControllerConsole implements IController {
 
     @Override
     public void exit() {
-
+        daoH2.closeDB();
+        System.exit(0);
     }
 
     private void startGame() {
         level = new Level(person);
         consoleGame = new ConsoleGame(this, level);
-//        f.repainForGame(person);
-//        setEnv(consoleGame.getEnv());
         consoleGame.gameLogic();
-
-
-    }
-
-    public void setEnv(Place[][] env) {
-        this.env = env;
-
     }
 
     public Person getPerson() {
         return person;
-    }
-
-    public void refresh(){
-//        if (level != null) {
-//            level.fillEnvironment(env);
-//        }
-//        consoleGame.refresh();
     }
 
     public boolean isMeetEnemy(Actions action) {

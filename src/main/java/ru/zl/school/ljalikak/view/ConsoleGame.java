@@ -2,14 +2,13 @@ package ru.zl.school.ljalikak.view;
 
 import ru.zl.school.ljalikak.controller.Actions;
 import ru.zl.school.ljalikak.controller.ControllerConsole;
-import ru.zl.school.ljalikak.model.Dice;
+import ru.zl.school.ljalikak.model.Level;
 import ru.zl.school.ljalikak.model.Person;
 import ru.zl.school.ljalikak.model.Place;
-import ru.zl.school.ljalikak.model.Level;
-
-import static ru.zl.school.ljalikak.model.Person.*;
 
 import java.util.Scanner;
+
+import static ru.zl.school.ljalikak.model.Person.*;
 
 public class ConsoleGame {
     private final static String TREE = "\033[2;0;32mT\033[00m";
@@ -24,19 +23,9 @@ public class ConsoleGame {
     private int width;
     private int height;
 
-//    private ModelView model;
     private ControllerConsole controller;
     private Person person;
     private String[] logs;
-    private String emptyLine;
-
-    private static Runnable DEFAULT_ACTION = new Runnable() {
-        @Override
-        public void run() {}
-    };
-    private Runnable runner;
-    private boolean needDestroy;
-
 
     private static String[] LABELS = {NAME, HP, LEVEL, EXP, ATTACK, DEFENSE};
 
@@ -58,7 +47,7 @@ public class ConsoleGame {
         for (int i = 0; i < width + 1; i++) {
             stringBuilder.append(" ");
         }
-        emptyLine = stringBuilder.toString();
+//        emptyLine = stringBuilder.toString();
 
 
 //        Thread thread = new Thread(this);
@@ -67,18 +56,6 @@ public class ConsoleGame {
     }
 
     private String getText(int i, int j) {
-
-//        if (env[i][j].hasWarrior()) {
-//            switch (env[i][j].getWarrior().getClazz()) {
-//                case SALAMANDER: return SALAMANDER;
-//                case CAPYBARA: return CAPYBARA;
-//                case ALPACA: return ALPACA;
-//                case HONEY_BADGER: return HONEY_BADGER;
-//                default:
-//                    return EMPTY;
-//            }
-//        }
-
         switch (env[i][j].getObject().getTypes()) {
             case BOUNDARY: return BOUNDARY;
             case STONE: return STONE;
@@ -92,9 +69,7 @@ public class ConsoleGame {
 
     public void refresh() {
 
-
         level.fillEnvironment(env);
-
 
         System.out.println("\33c");
 
@@ -155,26 +130,9 @@ public class ConsoleGame {
         }
     }
 
-//    public void run() {
-//        while (!needDestroy) {
-//            runner.run();
-//
-//            try {
-//                Thread.sleep(200);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
-
-
     public void gameLogic() {
         refresh();
         while (true) {
-
-
-
             try {
                 Actions action = Actions.getAction(readLine());
                 controller.executeCommand(action);
@@ -182,56 +140,15 @@ public class ConsoleGame {
 //                if (controller.isMeetEnemy(action) && !confirm("Do you want fight?") && Dice.d2()) {
 //                    return;
 //                } else {
-
 //                            getReward();
 //                            controller.moveWorld();
 //                            getReward();
 //                }
-
             } catch (DeadException e) {
-                refresh();
-//                    if (confirm(e.getMessage() + "\nrestart level?")) {
-//                        controller.startGame();
-//                    } else {
-//                        controller.startMenu();
-//                    }
+                System.out.println("Вы погибли! Игра окончена!");
+                controller.exit();
             }
         }
-    }
-
-
-
-
-
-
-
-
-    public void startGame() {
-        runner = new Runnable() {
-            @Override
-            public void run() {
-                refresh();
-                try {
-                    Actions action = Actions.getAction(readLine());
-                    if (controller.isMeetEnemy(action) && !confirm("Do you want fight?") && Dice.d2()) {
-                        return;
-                    } else {
-//                        if (controller.executeCommand(action)) {
-//                            getReward();
-//                            controller.moveWorld();
-//                            getReward();
-//                        }
-                    }
-                } catch (DeadException e) {
-                    refresh();
-//                    if (confirm(e.getMessage() + "\nrestart level?")) {
-//                        controller.startGame();
-//                    } else {
-//                        controller.startMenu();
-//                    }
-                }
-            }
-        };
     }
 
 //    private void getReward() {
@@ -269,7 +186,4 @@ public class ConsoleGame {
         return scanner.nextLine().trim();
     }
 
-    public void destroy() {
-        needDestroy = true;
-    }
 }

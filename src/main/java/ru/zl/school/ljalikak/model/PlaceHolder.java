@@ -1,7 +1,5 @@
 package ru.zl.school.ljalikak.model;
 
-import ru.zl.school.ljalikak.model.Types;
-
 import java.awt.*;
 import java.io.Serializable;
 

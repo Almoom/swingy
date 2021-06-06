@@ -114,7 +114,7 @@ public class Level {
         } else if (place.getObject().getTypes() == Types.ANIMAL && consent(mode)) {
             enemy = new Person("rat", Types.HUMAN, 1, 300, 1, 1, 5);
             enemy.setXY(shift.x + player.getX(), shift.y + player.getY());
-            player.fight(enemy);
+            player.fight(enemy, mode);
             insertOnMap(EMPTY, player.getX(), player.getY());
             player.setXY(enemy.getX(), enemy.getY());
             insertOnMap(player, enemy.getX(), enemy.getY());
