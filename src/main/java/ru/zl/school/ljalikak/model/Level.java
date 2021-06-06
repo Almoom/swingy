@@ -3,6 +3,7 @@ package ru.zl.school.ljalikak.model;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Level {
     final static public Point LEFT = new Point(-1, 0);
@@ -23,6 +24,7 @@ public class Level {
     public Person enemy;
 
     private Random random = new Random();
+    Scanner scanner = new Scanner(System.in);
 
     public Level(Person player) {
         level = player.getLevel();
@@ -103,13 +105,13 @@ public class Level {
         return getPlaceHolder(player.getX() + shift.x, player.getY() + shift.y) == BOUNDARY;
     }
 
-    public void tryMovePerson(Point shift) {
+    public void tryMovePerson(Point shift, String mode) {
         Place place = getPlace(shift.x + player.getX(), shift.y + player.getY());
         if (place != OUT && place.getObject() == EMPTY) {
             insertOnMap(EMPTY, player.getX(), player.getY());
             player.setXY(shift.x + player.getX(), shift.y + player.getY());
             insertOnMap(player);
-        } else if (place.getObject().getTypes() == Types.ANIMAL && consent()) {
+        } else if (place.getObject().getTypes() == Types.ANIMAL && consent(mode)) {
             enemy = new Person("rat", Types.HUMAN, 1, 300, 1, 1, 5);
             enemy.setXY(shift.x + player.getX(), shift.y + player.getY());
             player.fight(enemy);
@@ -119,18 +121,37 @@ public class Level {
         }
     }
 
-    private boolean consent() {
-        if (JOptionPane.showConfirmDialog(null,
-                "Желаете вступить в бой?",
-                "Attention!",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
-            return random.nextBoolean();
+    private boolean consent(String mode) {
+        if (mode.equals("gui")) {
+            if (JOptionPane.showConfirmDialog(null,
+                    "Желаете вступить в бой?",
+                    "Attention!",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+                return random.nextBoolean();
+            }
+        } else if (mode.equals("console")) {
+            System.out.println("Желаете вступить в бой? y/n");
+
+            while (scanner.hasNext()) {
+                String text = readLine();
+
+                switch (text) {
+                    case "y": return true;
+                    case "n": return random.nextBoolean();
+                    default:
+                        System.out.println("Желаете вступить в бой? y/n");
+                        break;
+                }
+            }
         }
         return true;
+    }
+
+    private String readLine() {
+        return scanner.nextLine().trim();
     }
 
     public Person getPlayer() {
         return player;
     }
-
 }

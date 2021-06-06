@@ -17,10 +17,10 @@ import java.util.Objects;
 
 import static ru.zl.school.ljalikak.model.Person.*;
 
-public class MyFrame extends JFrame {
+public class GuiFrame extends JFrame {
     ControllerGUI controllerFrame;
     private Person person;
-    private MyPanel gamePanel;
+    private GuiPanel gamePanel;
     private JPanel textPanel;
     private KeyListener listener;
     private Map<String, JLabel> labels;
@@ -56,17 +56,17 @@ public class MyFrame extends JFrame {
     private static Font font;
     static {
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(MyFrame.class.getResource("/14262.ttf")).openStream())
+            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(GuiFrame.class.getResource("/14262.ttf")).openStream())
                     .deriveFont(20f);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
     }
 
-    public MyFrame(ControllerGUI controllerFrame) throws IOException {
+    public GuiFrame(ControllerGUI controllerFrame) throws IOException {
 
         this.controllerFrame = controllerFrame;
-        gamePanel = new MyPanel(GAME_PANEL_WIDTH, GAME_PANEL_WIDTH);
+        gamePanel = new GuiPanel(GAME_PANEL_WIDTH, GAME_PANEL_WIDTH);
         gamePanel.setBounds(0, 0, HELLO_PANEL_WIDTH, HELLO_PANEL_HEIGHT);
         gamePanel.setBackground(new Color(20, 240, 116));
 
@@ -107,28 +107,28 @@ public class MyFrame extends JFrame {
         c.setLayout(null);
         c.setBackground(new Color(33, 33, 33));
 
-        title = new MyMainLabel("Pip-boy game");
+        title = new GuiMainLabel("Pip-boy game");
         c.add(title);
-        login = new MyLabel("Login");
+        login = new GuiLabel("Login");
         c.add(login);
-        tlogin = new MyTextField();
+        tlogin = new GuiTextField();
         c.add(tlogin);
-        race = new MyLabel("Race");
+        race = new GuiLabel("Race");
         c.add(race);
-        prepared = new MyLabel("<html>Or use</br> prepared</html>");
+        prepared = new GuiLabel("<html>Or use</br> prepared</html>");
         c.add(prepared);
 
-        human = new MyRadioButton(Types.HUMAN.toString().toLowerCase());
+        human = new GuiRadioButton(Types.HUMAN.toString().toLowerCase());
         human.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         human.setToolTipText("Начните игру человеком из Мегатонны с уровня 1!");
         c.add(human);
 
-        ghoul = new MyRadioButton(Types.GHOUL.toString().toLowerCase());
+        ghoul = new GuiRadioButton(Types.GHOUL.toString().toLowerCase());
         ghoul.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         ghoul.setToolTipText("Начните игру гулем из Некрополиса с уровня 5!");
         c.add(ghoul);
 
-        mutant = new MyRadioButton(Types.MUTANT.toString().toLowerCase());
+        mutant = new GuiRadioButton(Types.MUTANT.toString().toLowerCase());
         mutant.addActionListener(e -> type = Types.valueOf(e.getActionCommand().toUpperCase()));
         mutant.setToolTipText("Начните игру мутантом из Мирапозы с уровня 10!");
         c.add(mutant);
@@ -138,15 +138,15 @@ public class MyFrame extends JFrame {
         racep.add(ghoul);
         racep.add(mutant);
 
-        prepMen = new MyPrepButton(MyFrame.class.getResource("/men.png"));
+        prepMen = new GuiPrepButton(GuiFrame.class.getResource("/men.png"));
         prepMen.addActionListener(e -> startNew(new Person(tlogin.getText(), Types.HUMAN, 1, 0, 2, 2, 10)));
         prepMen.setToolTipText("Вы мужик 1 уровня, с атакой 2, защитой 2 и 10 жизнями");
 
-        prepDog = new MyPrepButton(MyFrame.class.getResource("/dog.png"));
+        prepDog = new GuiPrepButton(GuiFrame.class.getResource("/dog.png"));
         prepDog.addActionListener(e -> startNew(new Person(tlogin.getText(), Types.HUMAN, 1, 0, 2, 1, 15)));
         prepDog.setToolTipText("Вы пёс 1 уровня, с атакой 2, защитой 1 и 15 жизнями");
 
-        prepWomen = new MyPrepButton(MyFrame.class.getResource("/women.png"));
+        prepWomen = new GuiPrepButton(GuiFrame.class.getResource("/women.png"));
         prepWomen.addActionListener(e -> startNew(new Person(tlogin.getText(), Types.HUMAN, 1, 0, 1, 2, 15)));
         prepWomen.setToolTipText("Вы женщина 1 уровня, с атакой 1, защитой 2 и 15 жизнями");
 
@@ -155,11 +155,11 @@ public class MyFrame extends JFrame {
         c.add(prepWomen);
 
 
-        create = new MyButton("new");
+        create = new GuiButton("new");
         create.addActionListener(e -> startNew(new Person(tlogin.getText(), type)));
         c.add(create);
 
-        cont = new MyButton("continue");
+        cont = new GuiButton("continue");
         cont.addActionListener(e -> {
             try {
                 if (tlogin.getText().isEmpty()) {
@@ -189,7 +189,7 @@ public class MyFrame extends JFrame {
         } catch (RuntimeException ex) {
             JOptionPane.showMessageDialog(null,
                     ex.getMessage(),
-                    "Game Over",
+                    "Login incorrect!",
                     JOptionPane.PLAIN_MESSAGE);
         }
     }

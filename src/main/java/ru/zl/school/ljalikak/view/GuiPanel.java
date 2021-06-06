@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class MyPanel extends JPanel {
+public class GuiPanel extends JPanel {
     private final static int CELL_SIZE = 30;
     private static final Color GREEN_COLOR = new Color(18, 53, 36);
     private static final Place OUT = new Place(new PlaceHolder(Types.BOUNDARY), Types.BLACK);
@@ -21,7 +21,7 @@ public class MyPanel extends JPanel {
     private TexturePaint player;
     private TexturePaint rock;
 
-    public MyPanel(int width, int height) throws IOException {
+    public GuiPanel(int width, int height) throws IOException {
         width = width / CELL_SIZE;
         height = height / CELL_SIZE;
         env = new Place[height][width];

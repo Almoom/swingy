@@ -4,20 +4,20 @@ import ru.zl.school.ljalikak.model.Person;
 import ru.zl.school.ljalikak.model.Place;
 import ru.zl.school.ljalikak.model.DAOh2;
 import ru.zl.school.ljalikak.model.Level;
-import ru.zl.school.ljalikak.view.MyFrame;
+import ru.zl.school.ljalikak.view.GuiFrame;
 
 import java.awt.*;
 import java.io.IOException;
 
 public class ControllerGUI implements IController {
     private static DAOh2 daoH2 = DAOh2.getProvider();
-    MyFrame f;
+    GuiFrame f;
     private Level level;
     private Place[][] env;
     private Person person;
 
     public ControllerGUI() throws IOException {
-        f = new MyFrame(this);
+        f = new GuiFrame(this);
     }
 
     public void setEnv(Place[][] env) {
@@ -31,7 +31,7 @@ public class ControllerGUI implements IController {
             daoH2.update(person);
             level = new Level(level.getPlayer());
         } else {
-            level.tryMovePerson(shift);
+            level.tryMovePerson(shift, "gui");
         }
     }
 

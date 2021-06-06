@@ -3,11 +3,11 @@ package ru.zl.school.ljalikak.view.elems;
 import javax.swing.*;
 import java.awt.*;
 
-public class MyTextField extends JTextField {
+public class GuiTextField extends JTextField {
     private static final Font font = new Font("Helvetica", Font.PLAIN, 15);
     private static int count = 0;
 
-    public MyTextField() {
+    public GuiTextField() {
         super();
         setFont(font);
         setSize(190, 20);
