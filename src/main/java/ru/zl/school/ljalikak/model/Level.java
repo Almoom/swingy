@@ -51,11 +51,11 @@ public class Level {
                     continue;
                 int tmp = random.nextInt(100);
                 if (tmp < 4) {
-                    insertOnMap(new PlaceHolder(Types.ANIMAL, j, i));
+                    insertOnMap(new PlaceHolder(Types.RAT, j, i));
                 } else if (tmp < 7) {
-                    insertOnMap(new PlaceHolder(Types.STONE, j, i));
+                    insertOnMap(new PlaceHolder(Types.MOUNT, j, i));
                 } else if (tmp < 10) {
-                    insertOnMap(new PlaceHolder(Types.TREE, j, i));
+                    insertOnMap(new PlaceHolder(Types.RAD, j, i));
                 }
             }
         }
@@ -111,7 +111,7 @@ public class Level {
             insertOnMap(EMPTY, player.getX(), player.getY());
             player.setXY(shift.x + player.getX(), shift.y + player.getY());
             insertOnMap(player);
-        } else if (place.getObject().getTypes() == Types.ANIMAL && consent(mode)) {
+        } else if (place.getObject().getTypes() == Types.RAT && consent(mode)) {
             enemy = new Person("rat", Types.HUMAN, 1, 300, 1, 1, 5);
             enemy.setXY(shift.x + player.getX(), shift.y + player.getY());
             player.fight(enemy, mode);

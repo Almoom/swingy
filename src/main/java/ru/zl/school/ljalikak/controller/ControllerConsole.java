@@ -1,9 +1,8 @@
 package ru.zl.school.ljalikak.controller;
 
+import ru.zl.school.ljalikak.model.DAOh2;
 import ru.zl.school.ljalikak.model.Level;
 import ru.zl.school.ljalikak.model.Person;
-import ru.zl.school.ljalikak.model.DAOh2;
-import ru.zl.school.ljalikak.model.Place;
 import ru.zl.school.ljalikak.view.ConsoleGame;
 import ru.zl.school.ljalikak.view.ConsoleReg;
 
@@ -12,9 +11,9 @@ import java.awt.*;
 public class ControllerConsole implements IController {
     private static DAOh2 daoH2 = DAOh2.getProvider();
     private Level level;
-    private Place[][] env;
     private Person person;
     ConsoleGame consoleGame;
+
     public ControllerConsole() {
         ConsoleReg f = new ConsoleReg(this);
     }
@@ -59,23 +58,13 @@ public class ControllerConsole implements IController {
         return person;
     }
 
-    public boolean isMeetEnemy(Actions action) {
-        switch (action) {
-//            case MOVE_UP : return model.isMeetEnemy(Level.UP);
-//            case MOVE_DOWN: return model.isMeetEnemy(Level.DOWN);
-//            case MOVE_LEFT: return model.isMeetEnemy(Level.LEFT);
-//            case MOVE_RIGHT: return model.isMeetEnemy(Level.RIGHT);
-            default:
-                return false;
-        }
-    }
 
     @Override
     public void tryMovePlayer(Point shift) {
         if (level.isLeaveLevel(shift)) {
             person = level.getPlayer();
             daoH2.update(person);
-            level = new Level(level.getPlayer());
+            startGame();
         } else {
             level.tryMovePerson(shift, "console");
         }

@@ -8,11 +8,11 @@ public enum Types {
     MUTANT,
     GHOUL,
 
-    STONE,
-    TREE,
+    MOUNT,
+    RAD,
 
     PLAYER,
-    ANIMAL,
+    RAT,
 
     GREEN,
     BLACK

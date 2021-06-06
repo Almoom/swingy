@@ -4,7 +4,8 @@ import ru.zl.school.ljalikak.model.Person;
 import ru.zl.school.ljalikak.controller.Actions;
 import ru.zl.school.ljalikak.controller.ControllerGUI;
 import ru.zl.school.ljalikak.model.Types;
-import ru.zl.school.ljalikak.view.elems.*;
+import ru.zl.school.ljalikak.view.errors.DeadException;
+import ru.zl.school.ljalikak.view.guiElems.*;
 
 import javax.swing.*;
 import java.awt.*;

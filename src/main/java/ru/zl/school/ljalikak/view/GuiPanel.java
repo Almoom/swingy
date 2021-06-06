@@ -92,7 +92,7 @@ public class GuiPanel extends JPanel {
         int size = 2;
 
         switch (place.getObject().getTypes()) {
-            case STONE: {
+            case MOUNT: {
                 g2.setPaint(rock);
                 g2.fillRect(x, y, CELL_SIZE, CELL_SIZE);
                 return;
@@ -102,13 +102,13 @@ public class GuiPanel extends JPanel {
                 g2.fillRect(x, y, CELL_SIZE, CELL_SIZE);
                 return;
             }
-            case ANIMAL: {
+            case RAT: {
                 g2.setPaint(enemy);
                 g2.fillRect(x + 2, y + 2, 28, 28);
                 return;
             }
             case BOUNDARY: g2.setColor(Color.black); break;
-            case TREE: {
+            case RAD: {
                 g2.setPaint(rad);
                 g2.fillRect(x, y, CELL_SIZE, CELL_SIZE);
                 return;

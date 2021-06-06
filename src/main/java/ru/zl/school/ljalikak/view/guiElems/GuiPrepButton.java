@@ -1,4 +1,4 @@
-package ru.zl.school.ljalikak.view.elems;
+package ru.zl.school.ljalikak.view.guiElems;
 
 import javax.swing.*;
 import java.net.URL;

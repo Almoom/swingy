@@ -1,6 +1,6 @@
 package ru.zl.school.ljalikak.model;
 
-import ru.zl.school.ljalikak.view.StartException;
+import ru.zl.school.ljalikak.view.errors.StartException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

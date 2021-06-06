@@ -1,5 +1,6 @@
-package ru.zl.school.ljalikak.view.elems;
+package ru.zl.school.ljalikak.view.guiElems;
 
+import ru.zl.school.ljalikak.model.Types;
 import ru.zl.school.ljalikak.view.GuiFrame;
 
 import javax.swing.*;
@@ -7,7 +8,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class GuiButton extends JButton {
+public class GuiRadioButton extends JRadioButton {
+    private static final Color color = new Color(20, 240, 116);
     private static int count = 0;
     private static Font font;
     static {
@@ -19,11 +21,12 @@ public class GuiButton extends JButton {
         }
     }
 
-    public GuiButton(String text) {
+    public GuiRadioButton(String text) {
         super(text);
-        setSize(150, 30);
-        setLocation(90 + 160 * count++, 250);
         setFont(font);
+        setForeground(color);
+        setSize(80, 20);
+        setSelected(text.equals(Types.HUMAN.toString().toLowerCase()));
+        setLocation(190 + count++ * 70, 138);
     }
-
 }

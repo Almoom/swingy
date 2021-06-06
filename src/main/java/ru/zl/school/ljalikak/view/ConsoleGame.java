@@ -5,17 +5,18 @@ import ru.zl.school.ljalikak.controller.ControllerConsole;
 import ru.zl.school.ljalikak.model.Level;
 import ru.zl.school.ljalikak.model.Person;
 import ru.zl.school.ljalikak.model.Place;
+import ru.zl.school.ljalikak.view.errors.DeadException;
 
 import java.util.Scanner;
 
 import static ru.zl.school.ljalikak.model.Person.*;
 
 public class ConsoleGame {
-    private final static String TREE = "\033[2;0;32mT\033[00m";
+    private final static String RAD = "\033[2;0;32mW\033[00m";
     private final static String EMPTY = " ";
     private final static String PLAYER = "\033[2;43;30mP\033[00m";
-    private final static String ANIMAL = "\033[2;41;30mr\033[00m";
-    private final static String STONE = "\033[7;37ms\033[00m";
+    private final static String RAT = "\033[2;41;30mr\033[00m";
+    private final static String MOUNT = "\033[7;37mM\033[00m";
     private final static String BOUNDARY = "\033[1;30mX\033[00m";
 
     private Level level;
@@ -25,19 +26,13 @@ public class ConsoleGame {
 
     private ControllerConsole controller;
     private Person person;
-    private String[] logs;
 
     private static String[] LABELS = {NAME, HP, LEVEL, EXP, ATTACK, DEFENSE};
 
-    public Place[][] getEnv() {
-        return env;
-    }
     public ConsoleGame(ControllerConsole controller, Level level) {
         person = controller.getPerson();
-//        this.model = model;
         this.controller = controller;
         this.level = level;
-//        runner = DEFAULT_ACTION;
 
         width = 60;
         height = 20;
@@ -47,35 +42,24 @@ public class ConsoleGame {
         for (int i = 0; i < width + 1; i++) {
             stringBuilder.append(" ");
         }
-//        emptyLine = stringBuilder.toString();
-
-
-//        Thread thread = new Thread(this);
-//        thread.setName("Terminal");
-//        thread.start();
     }
 
     private String getText(int i, int j) {
         switch (env[i][j].getObject().getTypes()) {
             case BOUNDARY: return BOUNDARY;
-            case STONE: return STONE;
-            case TREE: return TREE;
+            case MOUNT: return MOUNT;
+            case RAD: return RAD;
             case PLAYER: return PLAYER;
-            case ANIMAL: return ANIMAL;
+            case RAT: return RAT;
             default:
                 return EMPTY;
         }
     }
 
     public void refresh() {
-
         level.fillEnvironment(env);
-
         System.out.println("\33c");
-
-//        player = model.getPlayer();
-//        logs = Fighting.getTextLog().split("\n");
-//        model.fillEnvironment(env);
+        System.out.println("[Для выхода введите \"exit\"]");
 
         String text = "";
         for (int i = 0; i < height; i++) {
@@ -86,13 +70,9 @@ public class ConsoleGame {
                 }
                 System.out.print(text);
             }
-//            printParamOrLogs(i);
+            printParamOrLogs(i);
             System.out.println("");
         }
-//        for (int i = height - LABELS.length; i < logs.length; i++) {
-//            System.out.print(emptyLine);
-//            System.out.println(logs[i]);
-//        }
     }
 
     private void printParamOrLogs(int i) {
@@ -123,10 +103,6 @@ public class ConsoleGame {
                 default:
                     break;
             }
-        } else if (i < LABELS.length + logs.length) {
-            i -= LABELS.length;
-            System.out.print(" ");
-            System.out.print(logs[i]);
         }
     }
 
@@ -135,15 +111,11 @@ public class ConsoleGame {
         while (true) {
             try {
                 Actions action = Actions.getAction(readLine());
+                if (action.equals(Actions.EXIT)) {
+                    controller.exit();
+                }
                 controller.executeCommand(action);
                 refresh();
-//                if (controller.isMeetEnemy(action) && !confirm("Do you want fight?") && Dice.d2()) {
-//                    return;
-//                } else {
-//                            getReward();
-//                            controller.moveWorld();
-//                            getReward();
-//                }
             } catch (DeadException e) {
                 System.out.println("Вы погибли! Игра окончена!");
                 controller.exit();
@@ -151,39 +123,8 @@ public class ConsoleGame {
         }
     }
 
-//    private void getReward() {
-//        while (model.hasItems()) {
-//            Item item = model.getItem();
-//            if (confirm("Do you want equip " + item.getName() + "?")) {
-//                item.equip(model.getPlayer());
-//            }
-//        }
-//    }
-
-    private boolean confirm(String message) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println(message);
-        System.out.println("yes/no");
-        while (scanner.hasNext()) {
-            String text = scanner.nextLine().trim();
-
-            switch (text) {
-                case "y":
-                case "yes": return true;
-                case "n":
-                case "no": return false;
-                default:
-                    System.out.println("print \"yes\" or \"no\"");
-                    break;
-            }
-        }
-        return true;
-    }
-
     private String readLine() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine().trim();
     }
-
 }
