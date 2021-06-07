@@ -66,12 +66,6 @@ public class GuiPanel extends JPanel {
                 printObject(g2, env[i][j], j * CELL_SIZE, i * CELL_SIZE);
             }
         }
-//        for (int i = 0; i < env.length; i++) {
-//            for (int j = 0; j < env[0].length; j++) {
-//                System.out.print(env[i][j].getObject().type.toString().substring(0, 3) + " ");
-//            }
-//            System.out.println();
-//        } //todo
     }
 
 

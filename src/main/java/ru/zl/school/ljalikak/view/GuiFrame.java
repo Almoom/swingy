@@ -87,7 +87,7 @@ public class GuiFrame extends JFrame {
                     controllerFrame.executeCommand(action);
                 } catch (DeadException ex) {
                     JOptionPane.showMessageDialog(null,
-                            "Player is dead!!!",
+                            "Вы умерли. Ваш облучённый труп не заинтересовал даже стервятников.",
                             "Game Over",
                             JOptionPane.PLAIN_MESSAGE);
                     controllerFrame.exit();

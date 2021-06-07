@@ -117,7 +117,7 @@ public class ConsoleGame {
                 controller.executeCommand(action);
                 refresh();
             } catch (DeadException e) {
-                System.out.println("Вы погибли! Игра окончена!");
+                System.out.println("Вы умерли. Ваш облучённый труп не заинтересовал даже стервятников.");
                 controller.exit();
             }
         }

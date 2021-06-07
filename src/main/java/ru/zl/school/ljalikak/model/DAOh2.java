@@ -15,7 +15,7 @@ import java.util.Set;
 public class DAOh2 implements IDAO {
     private static DAOh2 daOh2;
     private static final String driver = "org.h2.Driver";
-    private static final String url = "jdbc:h2:" + System.getenv("PWD") + "/db/Preservations;MV_STORE=false";
+    private static final String url = "jdbc:h2:" + System.getProperty("user.dir") + "/../db/Preservations;MV_STORE=false";
     private static final String username = "LJ";
     private static final String password = "123456";
     private Connection connection;
